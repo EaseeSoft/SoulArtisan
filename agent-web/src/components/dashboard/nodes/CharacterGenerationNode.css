@@ -1,0 +1,329 @@
+.character-gen-node {
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid #00eeff;
+  background: #1a1a1a;
+  box-shadow: 0 0 20px rgba(0, 238, 255, 0.2);
+  min-width: 380px;
+  max-width: 400px;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.character-gen-node:hover {
+  box-shadow: 0 0 30px rgba(0, 238, 255, 0.4);
+}
+
+.node-header {
+  padding: 12px 15px;
+  border-bottom: 1px solid #00eeff;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #00eeff;
+  border-radius: 0;
+  text-align: center;
+}
+
+.node-header strong {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.node-body {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.character-gen-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.character-gen-section.inline {
+  flex-direction: row;
+  gap: 10px;
+}
+
+.character-gen-section.inline > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.character-gen-label {
+  font-weight: 500;
+  color: #999;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.character-gen-textarea {
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 12px;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.3s ease;
+  min-height: 100px;
+  max-height: 150px;
+  box-sizing: border-box;
+  background: #252525;
+  color: #ddd;
+}
+
+.character-gen-textarea:focus {
+  outline: none;
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.character-gen-textarea::placeholder {
+  color: #555;
+}
+
+.character-gen-input {
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 12px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background: #252525;
+  color: #ddd;
+}
+
+.character-gen-input:focus {
+  outline: none;
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.character-gen-input::placeholder {
+  color: #555;
+}
+
+.character-gen-select {
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 12px;
+  background: #252525;
+  color: #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.character-gen-select.full-width {
+  width: 100%;
+}
+
+.character-gen-select:hover {
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.character-gen-select:focus {
+  outline: none;
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.character-gen-select option {
+  background: #1a1a1a;
+  color: #ddd;
+}
+
+.controls-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  padding-top: 8px;
+  border-top: 1px solid #333;
+}
+
+.control-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 0.6;
+}
+
+.control-item-label {
+  font-weight: 500;
+  color: #999;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.control-item-value {
+  padding: 6px 8px;
+  background: #252525;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #ddd;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.generate-btn {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #00eeff 0%, #0088ff 100%);
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex: 1;
+  white-space: nowrap;
+}
+
+.generate-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #00ffff 0%, #00aaff 100%);
+  box-shadow: 0 0 15px rgba(0, 238, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.generate-btn:disabled {
+  background: #333;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.output-section {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #333;
+}
+
+.output-section .character-gen-label {
+  margin-bottom: 8px;
+}
+
+.output-character-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #0a0a0a;
+  padding: 8px;
+}
+
+.output-character-preview img {
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 6px;
+}
+
+/* Tab 导航样式 */
+.tab-navigation {
+  display: flex;
+  border-bottom: 1px solid #333;
+  background: #1a1a1a;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tab-btn:hover {
+  color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.tab-btn.active {
+  color: #00eeff;
+  border-bottom-color: #00eeff;
+  background: rgba(0, 238, 255, 0.1);
+}
+
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Loading 动画容器 */
+.video-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  gap: 16px;
+}
+
+/* Loading 动画 - 旋转圆环 */
+.video-loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #333;
+  border-top: 3px solid #00eeff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Loading 状态文本 */
+.video-loading-text {
+  color: #00d4ff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Loading 进度提示 */
+.video-loading-hint {
+  color: #666;
+  font-size: 11px;
+  text-align: center;
+}
+
+/* 按钮内的小 spinner */
+.btn-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-top: 2px solid #000;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 6px;
+  vertical-align: middle;
+}

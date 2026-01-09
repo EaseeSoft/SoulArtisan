@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jf.soulartisan.admin.mapper.ChatPromptMapper">
+
+    <!-- 根据场景编码查询 -->
+    <select id="selectByCode" resultType="com.jf.soulartisan.admin.entity.ChatPrompt">
+        SELECT * FROM chat_prompts
+        WHERE code = #{code}
+        LIMIT 1
+    </select>
+
+    <!-- 查询所有启用的提示词配置 -->
+    <select id="selectAllEnabled" resultType="com.jf.soulartisan.admin.entity.ChatPrompt">
+        SELECT * FROM chat_prompts
+        WHERE is_enabled = 1
+        ORDER BY sort_order ASC
+    </select>
+
+    <!-- 查询所有提示词配置（按排序顺序） -->
+    <select id="selectAllOrderBySortOrder" resultType="com.jf.soulartisan.admin.entity.ChatPrompt">
+        SELECT * FROM chat_prompts
+        ORDER BY sort_order ASC
+    </select>
+
+</mapper>

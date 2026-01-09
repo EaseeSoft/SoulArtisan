@@ -1,0 +1,1509 @@
+/* 角色项目详情页样式 - 黑色简约科技风格 */
+
+:root {
+  --tech-bg-primary: #0a0a0f;
+  --tech-bg-secondary: #12121a;
+  --tech-bg-card: #16161f;
+  --tech-bg-hover: #1e1e2a;
+  --tech-border: #2a2a3a;
+  --tech-border-hover: #3a3a4f;
+  --tech-accent: #00d4ff;
+  --tech-accent-secondary: #7c3aed;
+  --tech-accent-glow: rgba(0, 212, 255, 0.15);
+  --tech-text-primary: #f0f0f5;
+  --tech-text-secondary: #9090a8;
+  --tech-text-muted: #606075;
+  --tech-success: #00ff88;
+  --tech-warning: #ffaa00;
+  --tech-danger: #ff4466;
+}
+
+.cpd-page {
+  min-height: 100vh;
+  background: var(--tech-bg-primary);
+  padding: 24px;
+}
+
+.cpd-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.cpd-header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+
+.cpd-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: transparent;
+  border: 1px solid var(--tech-border);
+  border-radius: 8px;
+  color: var(--tech-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cpd-back-btn:hover {
+  border-color: var(--tech-accent);
+  color: var(--tech-accent);
+  box-shadow: 0 0 12px var(--tech-accent-glow);
+}
+
+.cpd-back-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cpd-title-wrapper {
+  flex: 1;
+}
+
+.cpd-title {
+  color: var(--tech-text-primary);
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  letter-spacing: 0.5px;
+}
+
+.cpd-subtitle {
+  color: var(--tech-text-muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* 进度步骤条 */
+.cpd-progress-bar {
+  background: var(--tech-bg-card);
+  border: 1px solid var(--tech-border);
+  border-radius: 12px;
+  padding: 28px 36px;
+  margin-bottom: 24px;
+}
+
+.cpd-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.cpd-steps::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 70px;
+  right: 70px;
+  height: 1px;
+  background: var(--tech-border);
+  z-index: 0;
+}
+
+.cpd-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.cpd-step-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--tech-bg-secondary);
+  border: 2px solid var(--tech-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--tech-text-muted);
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.cpd-step.active .cpd-step-circle {
+  background: var(--tech-accent);
+  border-color: var(--tech-accent);
+  color: var(--tech-bg-primary);
+  box-shadow: 0 0 20px var(--tech-accent-glow);
+}
+
+.cpd-step.completed .cpd-step-circle {
+  background: var(--tech-success);
+  border-color: var(--tech-success);
+  color: var(--tech-bg-primary);
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.2);
+}
+
+.cpd-step-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tech-text-muted);
+  text-align: center;
+}
+
+.cpd-step.active .cpd-step-label {
+  color: var(--tech-accent);
+}
+
+.cpd-step.completed .cpd-step-label {
+  color: var(--tech-success);
+}
+
+.cpd-step.clickable {
+  cursor: pointer;
+}
+
+.cpd-step.clickable:hover .cpd-step-circle {
+  transform: scale(1.05);
+  box-shadow: 0 0 24px rgba(0, 255, 136, 0.4);
+}
+
+.cpd-step.clickable:hover .cpd-step-label {
+  color: var(--tech-text-primary);
+}
+
+/* 主内容区 */
+.cpd-content {
+  background: var(--tech-bg-card);
+  border: 1px solid var(--tech-border);
+  border-radius: 12px;
+  padding: 28px;
+  min-height: 560px;
+}
+
+/* 步骤1：输入剧本 */
+.cpd-script-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cpd-script-input {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.cpd-script-input label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--tech-text-secondary);
+  margin-bottom: 12px;
+}
+
+.cpd-script-input textarea {
+  flex: 1;
+  min-height: 420px;
+  padding: 16px;
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-border);
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--tech-text-primary);
+  resize: vertical;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.cpd-script-input textarea::placeholder {
+  color: var(--tech-text-muted);
+}
+
+.cpd-script-input textarea:focus {
+  outline: none;
+  border-color: var(--tech-accent);
+  box-shadow: 0 0 0 2px var(--tech-accent-glow);
+}
+
+.cpd-script-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.cpd-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cpd-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cpd-btn-primary {
+  background: var(--tech-accent);
+  color: var(--tech-bg-primary);
+}
+
+.cpd-btn-primary:hover {
+  box-shadow: 0 0 20px var(--tech-accent-glow);
+}
+
+.cpd-btn-secondary {
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-border);
+  color: var(--tech-text-secondary);
+}
+
+.cpd-btn-secondary:hover {
+  border-color: var(--tech-border-hover);
+  color: var(--tech-text-primary);
+}
+
+.cpd-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.cpd-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* 步骤2：资源管理 */
+.cpd-resource-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cpd-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cpd-btn-small {
+  padding: 9px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cpd-btn-small.cpd-btn-primary {
+  background: var(--tech-accent);
+  color: var(--tech-bg-primary);
+}
+
+.cpd-btn-small.cpd-btn-primary:hover {
+  box-shadow: 0 0 16px var(--tech-accent-glow);
+}
+
+.cpd-btn-small.cpd-btn-secondary {
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-border);
+  color: var(--tech-text-secondary);
+}
+
+.cpd-btn-small.cpd-btn-secondary:hover {
+  border-color: var(--tech-border-hover);
+  color: var(--tech-text-primary);
+}
+
+.cpd-btn-small:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cpd-btn-small svg {
+  width: 15px;
+  height: 15px;
+}
+
+.cpd-table-container {
+  border: 1px solid var(--tech-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cpd-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cpd-table thead {
+  background: var(--tech-bg-secondary);
+}
+
+.cpd-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tech-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cpd-table td {
+  padding: 14px 16px;
+  border-top: 1px solid var(--tech-border);
+  font-size: 13px;
+  color: var(--tech-text-primary);
+}
+
+.cpd-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.cpd-table tbody tr:hover {
+  background: var(--tech-bg-hover);
+}
+
+.cpd-resource-type {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.cpd-resource-type.character {
+  background: rgba(0, 212, 255, 0.12);
+  color: var(--tech-accent);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+}
+
+.cpd-resource-type.scene {
+  background: rgba(124, 58, 237, 0.12);
+  color: var(--tech-accent-secondary);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+}
+
+.cpd-resource-type.prop {
+  background: rgba(255, 170, 0, 0.12);
+  color: var(--tech-warning);
+  border: 1px solid rgba(255, 170, 0, 0.25);
+}
+
+.cpd-resource-type.skill {
+  background: rgba(0, 255, 136, 0.12);
+  color: var(--tech-success);
+  border: 1px solid rgba(0, 255, 136, 0.25);
+}
+
+.cpd-status-badge {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.cpd-status-badge.completed,
+.cpd-status-badge.video_generated {
+  background: rgba(0, 255, 136, 0.12);
+  color: var(--tech-success);
+  border: 1px solid rgba(0, 255, 136, 0.25);
+}
+
+.cpd-status-badge.not_generated,
+.cpd-status-badge.pending {
+  background: rgba(144, 144, 168, 0.12);
+  color: var(--tech-text-secondary);
+  border: 1px solid var(--tech-border);
+}
+
+.cpd-status-badge.generating,
+.cpd-status-badge.video_generating,
+.cpd-status-badge.character_generating {
+  background: rgba(0, 212, 255, 0.12);
+  color: var(--tech-accent);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+}
+
+.cpd-status-badge.failed {
+  background: rgba(255, 68, 102, 0.12);
+  color: var(--tech-danger);
+  border: 1px solid rgba(255, 68, 102, 0.25);
+}
+
+.cpd-source-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  background: rgba(124, 58, 237, 0.12);
+  color: var(--tech-accent-secondary);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+}
+
+.cpd-source-badge.extract {
+  background: rgba(0, 212, 255, 0.12);
+  color: var(--tech-accent);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+}
+
+.cpd-source-badge svg {
+  width: 12px;
+  height: 12px;
+}
+
+.cpd-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.cpd-icon-btn {
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--tech-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cpd-icon-btn:hover {
+  background: var(--tech-bg-hover);
+  color: var(--tech-accent);
+}
+
+.cpd-icon-btn.danger:hover {
+  background: rgba(255, 68, 102, 0.1);
+  color: var(--tech-danger);
+}
+
+.cpd-icon-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.cpd-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--tech-text-secondary);
+}
+
+.cpd-empty-icon {
+  font-size: 56px;
+  margin-bottom: 16px;
+  opacity: 0.4;
+  filter: grayscale(0.5);
+}
+
+.cpd-empty p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* 步骤3：分镜创作 */
+.cpd-storyboard-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cpd-storyboard-card {
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-border);
+  border-radius: 10px;
+  padding: 20px;
+  transition: all 0.2s ease;
+}
+
+.cpd-storyboard-card:hover {
+  border-color: var(--tech-border-hover);
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.06);
+}
+
+.cpd-storyboard-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.cpd-storyboard-info {
+  flex: 1;
+}
+
+.cpd-storyboard-number {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--tech-accent);
+  color: var(--tech-bg-primary);
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cpd-storyboard-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--tech-text-primary);
+  margin: 0 0 8px 0;
+}
+
+.cpd-storyboard-desc {
+  font-size: 13px;
+  color: var(--tech-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.cpd-storyboard-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--tech-border);
+}
+
+.cpd-resource-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--tech-bg-primary);
+  color: var(--tech-text-secondary);
+  border: 1px solid var(--tech-border);
+}
+
+.cpd-resource-tag svg {
+  width: 13px;
+  height: 13px;
+}
+
+.cpd-resource-tag-img {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 1px solid var(--tech-border);
+}
+
+/* 模态框样式 */
+.cpd-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.cpd-modal {
+  background: var(--tech-bg-card);
+  border: 1px solid var(--tech-border);
+  border-radius: 12px;
+  padding: 28px;
+  width: 90%;
+  max-width: 720px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+  animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.cpd-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.cpd-modal-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--tech-text-primary);
+  margin: 0;
+}
+
+.cpd-modal-close {
+  padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--tech-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cpd-modal-close:hover {
+  background: var(--tech-bg-hover);
+  color: var(--tech-text-primary);
+}
+
+.cpd-modal-close svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cpd-modal-content {
+  margin-bottom: 24px;
+}
+
+.cpd-form-group {
+  margin-bottom: 20px;
+}
+
+.cpd-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tech-text-secondary);
+}
+
+.cpd-form-group input,
+.cpd-form-group select,
+.cpd-form-group textarea {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-border);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--tech-text-primary);
+  transition: all 0.2s ease;
+}
+
+.cpd-form-group input:focus,
+.cpd-form-group select:focus,
+.cpd-form-group textarea:focus {
+  outline: none;
+  border-color: var(--tech-accent);
+  box-shadow: 0 0 0 2px var(--tech-accent-glow);
+}
+
+.cpd-form-group input::placeholder,
+.cpd-form-group textarea::placeholder {
+  color: var(--tech-text-muted);
+}
+
+.cpd-form-group input[type="number"] {
+  width: 120px;
+}
+
+.cpd-form-group select option {
+  background: var(--tech-bg-secondary);
+  color: var(--tech-text-primary);
+}
+
+.cpd-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 12px;
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-border);
+  border-radius: 8px;
+}
+
+.cpd-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.cpd-checkbox-item:hover {
+  background: var(--tech-bg-hover);
+}
+
+.cpd-checkbox-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--tech-accent);
+}
+
+.cpd-checkbox-item label {
+  flex: 1;
+  cursor: pointer;
+  margin: 0;
+  font-size: 13px;
+  color: var(--tech-text-primary);
+}
+
+.cpd-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cpd-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: var(--tech-text-secondary);
+}
+
+.cpd-spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--tech-border);
+  border-top-color: var(--tech-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.cpd-loading span {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+/* ========== 资源表格组件样式 ========== */
+
+/* 筛选器 */
+.cpd-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cpd-filter-select {
+  padding: 8px 12px;
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-border);
+  border-radius: 6px;
+  color: var(--tech-text-primary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cpd-filter-select:hover {
+  border-color: var(--tech-border-hover);
+}
+
+.cpd-filter-select:focus {
+  outline: none;
+  border-color: var(--tech-accent);
+  box-shadow: 0 0 0 2px var(--tech-accent-glow);
+}
+
+.cpd-filter-select option {
+  background: var(--tech-bg-secondary);
+  color: var(--tech-text-primary);
+}
+
+/* 资源表格容器 */
+.cpd-resource-table-container {
+  border: 1px solid var(--tech-border);
+  border-radius: 10px;
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.cpd-resource-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.cpd-resource-table thead {
+  background: var(--tech-bg-secondary);
+}
+
+.cpd-resource-table th {
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tech-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.cpd-resource-table td {
+  padding: 12px 14px;
+  border-top: 1px solid var(--tech-border);
+  font-size: 13px;
+  color: var(--tech-text-primary);
+  vertical-align: middle;
+}
+
+.cpd-resource-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.cpd-resource-table tbody tr:hover {
+  background: var(--tech-bg-hover);
+}
+
+/* 资源缩略图 */
+.cpd-resource-thumbnail {
+  width: 64px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cpd-resource-thumbnail.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cpd-resource-thumbnail.clickable:hover {
+  border-color: var(--tech-accent);
+  box-shadow: 0 0 8px var(--tech-accent-glow);
+}
+
+.cpd-resource-thumbnail img,
+.cpd-resource-thumbnail video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cpd-resource-no-preview {
+  color: var(--tech-text-muted);
+}
+
+.cpd-resource-no-preview svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* 资源名称单元格 */
+.cpd-resource-name-cell {
+  font-weight: 500;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 提示词单元格 */
+.cpd-resource-prompt-cell {
+  max-width: 200px;
+}
+
+.cpd-prompt-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 36px;
+}
+
+.cpd-prompt-display:hover {
+  border-color: var(--tech-border-hover);
+  background: var(--tech-bg-hover);
+}
+
+.cpd-prompt-text {
+  flex: 1;
+  font-size: 12px;
+  color: var(--tech-text-secondary);
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.cpd-prompt-empty {
+  flex: 1;
+  font-size: 12px;
+  color: var(--tech-text-muted);
+  font-style: italic;
+}
+
+.cpd-prompt-edit-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--tech-text-muted);
+  flex-shrink: 0;
+}
+
+.cpd-prompt-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cpd-prompt-textarea {
+  width: 100%;
+  padding: 10px;
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-accent);
+  border-radius: 6px;
+  color: var(--tech-text-primary);
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 80px;
+  box-sizing: border-box;
+}
+
+.cpd-prompt-textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--tech-accent-glow);
+}
+
+.cpd-prompt-textarea::placeholder {
+  color: var(--tech-text-muted);
+}
+
+.cpd-prompt-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.cpd-prompt-btn {
+  padding: 5px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cpd-prompt-btn.save {
+  background: var(--tech-accent);
+  color: var(--tech-bg-primary);
+}
+
+.cpd-prompt-btn.save:hover {
+  box-shadow: 0 0 8px var(--tech-accent-glow);
+}
+
+.cpd-prompt-btn.cancel {
+  background: var(--tech-bg-hover);
+  color: var(--tech-text-secondary);
+}
+
+.cpd-prompt-btn.cancel:hover {
+  color: var(--tech-text-primary);
+}
+
+.cpd-prompt-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 尺寸选择 */
+.cpd-resource-aspect-cell {
+  width: 80px;
+}
+
+.cpd-aspect-select {
+  padding: 6px 10px;
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-border);
+  border-radius: 4px;
+  color: var(--tech-text-primary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cpd-aspect-select:hover {
+  border-color: var(--tech-border-hover);
+}
+
+.cpd-aspect-select:focus {
+  outline: none;
+  border-color: var(--tech-accent);
+}
+
+.cpd-aspect-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cpd-aspect-select option {
+  background: var(--tech-bg-secondary);
+}
+
+/* 时间输入 */
+.cpd-resource-time-cell {
+  width: 70px;
+}
+
+.cpd-time-input {
+  width: 60px;
+  padding: 6px 8px;
+  background: var(--tech-bg-secondary);
+  border: 1px solid var(--tech-border);
+  border-radius: 4px;
+  color: var(--tech-text-primary);
+  font-size: 12px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.cpd-time-input:hover {
+  border-color: var(--tech-border-hover);
+}
+
+.cpd-time-input:focus {
+  outline: none;
+  border-color: var(--tech-accent);
+  box-shadow: 0 0 0 2px var(--tech-accent-glow);
+}
+
+.cpd-time-input::placeholder {
+  color: var(--tech-text-muted);
+}
+
+.cpd-no-time {
+  color: var(--tech-text-muted);
+  font-size: 12px;
+}
+
+/* 日期单元格 */
+.cpd-resource-date {
+  font-size: 12px;
+  color: var(--tech-text-muted);
+  white-space: nowrap;
+}
+
+/* 操作按钮组 */
+.cpd-resource-actions-cell {
+  width: 200px;
+}
+
+.cpd-resource-action-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cpd-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.cpd-action-btn.video {
+  background: var(--tech-accent);
+  color: var(--tech-bg-primary);
+}
+
+.cpd-action-btn.video:hover {
+  box-shadow: 0 0 10px var(--tech-accent-glow);
+}
+
+.cpd-action-btn.character {
+  background: var(--tech-accent-secondary);
+  color: #fff;
+}
+
+.cpd-action-btn.character:hover {
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+}
+
+.cpd-action-btn.delete {
+  background: transparent;
+  border: 1px solid var(--tech-border);
+  color: var(--tech-text-muted);
+}
+
+.cpd-action-btn.delete:hover {
+  border-color: var(--tech-danger);
+  color: var(--tech-danger);
+  background: rgba(255, 68, 102, 0.1);
+}
+
+.cpd-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* 按钮加载动画 */
+.cpd-btn-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* 预览模态框 */
+.cpd-preview-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+  backdrop-filter: blur(8px);
+}
+
+.cpd-preview-container {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cpd-preview-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  background: var(--tech-bg-card);
+  border: 1px solid var(--tech-border);
+  border-radius: 50%;
+  color: var(--tech-text-secondary);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cpd-preview-close:hover {
+  background: var(--tech-bg-hover);
+  color: var(--tech-text-primary);
+  border-color: var(--tech-border-hover);
+}
+
+.cpd-preview-image,
+.cpd-preview-video {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.cpd-preview-info {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.cpd-preview-info h3 {
+  color: var(--tech-text-primary);
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 8px 0;
+}
+
+/* 分镜资源标签 */
+.cpd-storyboard-resources-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--tech-text-muted);
+  margin-right: 8px;
+}
+
+/* 视频提示词编辑区 */
+.cpd-storyboard-prompt {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--tech-border);
+}
+
+.cpd-storyboard-prompt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.cpd-storyboard-prompt-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--tech-text-muted);
+}
+
+.cpd-btn-text {
+  padding: 4px 8px;
+  background: transparent;
+  border: none;
+  color: var(--tech-accent);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cpd-btn-text:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.cpd-storyboard-prompt-text {
+  font-size: 13px;
+  color: var(--tech-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  padding: 10px 12px;
+  background: var(--tech-bg-primary);
+  border-radius: 6px;
+  border: 1px solid var(--tech-border);
+}
+
+.cpd-storyboard-prompt-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cpd-storyboard-prompt-edit textarea {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--tech-bg-primary);
+  border: 1px solid var(--tech-accent);
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--tech-text-primary);
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.cpd-storyboard-prompt-edit textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--tech-accent-glow);
+}
+
+.cpd-storyboard-prompt-edit textarea::placeholder {
+  color: var(--tech-text-muted);
+}
+
+.cpd-storyboard-prompt-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* 分镜视频列表 */
+.cpd-storyboard-videos {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--tech-border);
+}
+
+.cpd-storyboard-videos-header {
+  margin-bottom: 12px;
+}
+
+.cpd-storyboard-videos-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--tech-text-muted);
+}
+
+.cpd-storyboard-videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.cpd-storyboard-video-item {
+  background: var(--tech-bg-primary);
+  border: 1px solid var(--tech-border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.cpd-storyboard-video-item:hover {
+  border-color: var(--tech-border-hover);
+  box-shadow: 0 0 12px var(--tech-accent-glow);
+}
+
+.cpd-storyboard-video-player {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  background: var(--tech-bg-secondary);
+}
+
+.cpd-storyboard-video-placeholder {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--tech-bg-secondary);
+}
+
+.cpd-storyboard-video-error {
+  font-size: 11px;
+  color: var(--tech-danger);
+  text-align: center;
+  padding: 0 10px;
+  margin: 0;
+}
+
+.cpd-storyboard-video-info {
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cpd-storyboard-video-duration {
+  font-size: 11px;
+  color: var(--tech-text-secondary);
+}
+
+.cpd-storyboard-video-date {
+  font-size: 10px;
+  color: var(--tech-text-muted);
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .cpd-steps::before {
+    left: 50px;
+    right: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cpd-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cpd-header-left {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cpd-title {
+    font-size: 20px;
+  }
+
+  .cpd-progress-bar {
+    padding: 20px;
+  }
+
+  .cpd-step-circle {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .cpd-step-label {
+    font-size: 12px;
+  }
+
+  .cpd-content {
+    padding: 20px;
+  }
+
+  .cpd-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cpd-btn-small {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cpd-modal {
+    width: 95%;
+    padding: 20px;
+  }
+}

@@ -1,0 +1,479 @@
+.storyboard-list-node {
+  background: linear-gradient(135deg, #1a1f35 0%, #2d3555 100%);
+  border: 2px solid #4a5568;
+  border-radius: 12px;
+  min-width: 480px;
+  max-width: 520px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+.storyboard-list-node *,
+.storyboard-list-node *::before,
+.storyboard-list-node *::after {
+  box-sizing: border-box;
+}
+
+.storyboard-list-node .node-header {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  padding: 10px 16px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.storyboard-list-node .selected-count {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.storyboard-list-node .node-body {
+  padding: 12px;
+}
+
+/* 全选行 */
+.storyboard-list-node .select-all-row {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
+}
+
+.storyboard-list-node .select-all-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #a0aec0;
+}
+
+.storyboard-list-node .select-all-label:hover {
+  color: #fff;
+}
+
+.storyboard-list-node .select-all-label input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* 分镜列表 */
+.storyboard-list-node .shots-list {
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 4px;
+}
+
+.storyboard-list-node .shots-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.storyboard-list-node .shots-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.storyboard-list-node .shots-list::-webkit-scrollbar-thumb {
+  background: rgba(102, 126, 234, 0.5);
+  border-radius: 3px;
+}
+
+.storyboard-list-node .empty-list {
+  text-align: center;
+  color: #a0aec0;
+  padding: 20px;
+  font-size: 14px;
+}
+
+/* 分镜项 */
+.storyboard-list-node .shot-item {
+  display: flex;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.storyboard-list-node .shot-item:hover {
+  background: rgba(102, 126, 234, 0.1);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.storyboard-list-node .shot-item.selected {
+  background: rgba(102, 126, 234, 0.15);
+  border-color: #667eea;
+}
+
+.storyboard-list-node .shot-checkbox {
+  display: flex;
+  align-items: flex-start;
+  padding-top: 2px;
+}
+
+.storyboard-list-node .shot-checkbox input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #667eea;
+}
+
+.storyboard-list-node .shot-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.storyboard-list-node .shot-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.storyboard-list-node .shot-number {
+  font-weight: bold;
+  color: #667eea;
+  font-size: 13px;
+}
+
+.storyboard-list-node .shot-duration {
+  background: rgba(102, 126, 234, 0.2);
+  color: #a5b4fc;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.storyboard-list-node .shot-camera {
+  color: #a0aec0;
+  font-size: 11px;
+}
+
+.storyboard-list-node .shot-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.storyboard-list-node .shot-field {
+  display: flex;
+  gap: 4px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.storyboard-list-node .field-label {
+  color: #718096;
+  flex-shrink: 0;
+}
+
+.storyboard-list-node .field-value {
+  color: #e2e8f0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.storyboard-list-node .shot-field.dialogue .field-value {
+  color: #fbbf24;
+  font-style: italic;
+}
+
+.storyboard-list-node .field-value.characters {
+  color: #a5b4fc;
+}
+
+.storyboard-list-node .field-value.vfx {
+  color: #34d399;
+}
+
+/* 编辑按钮 */
+.storyboard-list-node .shot-edit-btn {
+  margin-left: auto;
+  background: rgba(102, 126, 234, 0.2);
+  border: none;
+  color: #a5b4fc;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.storyboard-list-node .shot-item:hover .shot-edit-btn {
+  opacity: 1;
+}
+
+.storyboard-list-node .shot-edit-btn:hover {
+  background: rgba(102, 126, 234, 0.4);
+  color: #fff;
+}
+
+/* 编辑模式 */
+.storyboard-list-node .shot-item.editing {
+  background: rgba(102, 126, 234, 0.1);
+  border-color: #667eea;
+  padding: 12px;
+}
+
+.storyboard-list-node .shot-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.storyboard-list-node .edit-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.storyboard-list-node .edit-row label {
+  flex: 0 0 45px;
+  font-size: 12px;
+  color: #a0aec0;
+  padding-top: 6px;
+}
+
+.storyboard-list-node .edit-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 6px 8px;
+  color: #fff;
+  font-size: 12px;
+  outline: none;
+}
+
+.storyboard-list-node .edit-textarea {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 6px 8px;
+  color: #fff;
+  font-size: 12px;
+  outline: none;
+  resize: vertical;
+  min-height: 40px;
+}
+
+.storyboard-list-node .edit-input:focus,
+.storyboard-list-node .edit-textarea:focus {
+  border-color: #667eea;
+}
+
+.storyboard-list-node .edit-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.storyboard-list-node .edit-save-btn {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.storyboard-list-node .edit-save-btn:hover {
+  opacity: 0.9;
+}
+
+.storyboard-list-node .edit-cancel-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #a0aec0;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.storyboard-list-node .edit-cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* 生成参数区域 */
+.storyboard-list-node .generation-options {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-sizing: border-box;
+}
+
+.storyboard-list-node .options-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.storyboard-list-node .option-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.storyboard-list-node .option-item.style-item {
+  flex: 2;
+}
+
+.storyboard-list-node .option-item.duration-item,
+.storyboard-list-node .option-item.ratio-item {
+  flex: 1;
+}
+
+.storyboard-list-node .option-item.count-item {
+  flex: 0 0 50px;
+}
+
+.storyboard-list-node .option-label {
+  font-size: 11px;
+  color: #a0aec0;
+}
+
+.storyboard-list-node .option-select {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 6px 4px;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.storyboard-list-node .option-select:hover {
+  border-color: rgba(102, 126, 234, 0.5);
+}
+
+.storyboard-list-node .option-select:focus {
+  border-color: #667eea;
+}
+
+.storyboard-list-node .option-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.storyboard-list-node .count-input {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 6px 4px;
+  color: #fff;
+  font-size: 12px;
+  width: 100%;
+  outline: none;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.storyboard-list-node .count-input:hover {
+  border-color: rgba(102, 126, 234, 0.5);
+}
+
+.storyboard-list-node .count-input:focus {
+  border-color: #667eea;
+}
+
+.storyboard-list-node .count-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 去除 number input 的默认箭头 */
+.storyboard-list-node .count-input::-webkit-outer-spin-button,
+.storyboard-list-node .count-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.storyboard-list-node .count-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* 生成按钮 */
+.storyboard-list-node .generate-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 8px;
+}
+
+.storyboard-list-node .generate-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.storyboard-list-node .generate-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.storyboard-list-node .generate-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 生成分镜图按钮 */
+.storyboard-list-node .generate-image-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #ff9f43 0%, #ff6b35 100%);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  color: #000;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.storyboard-list-node .generate-image-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 159, 67, 0.4);
+}
+
+.storyboard-list-node .generate-image-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.storyboard-list-node .generate-image-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

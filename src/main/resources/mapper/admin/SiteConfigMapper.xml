@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jf.soulartisan.admin.mapper.SiteConfigMapper">
+
+    <!-- 根据站点ID和配置键查询配置 -->
+    <select id="selectBySiteIdAndKey" resultType="com.jf.soulartisan.admin.entity.SiteConfig">
+        SELECT * FROM site_config
+        WHERE site_id = #{siteId} AND config_key = #{configKey}
+        LIMIT 1
+    </select>
+
+    <!-- 根据站点ID查询所有配置 -->
+    <select id="selectBySiteId" resultType="com.jf.soulartisan.admin.entity.SiteConfig">
+        SELECT * FROM site_config WHERE site_id = #{siteId}
+    </select>
+
+    <!-- 根据站点ID删除所有配置 -->
+    <delete id="deleteBySiteId">
+        DELETE FROM site_config WHERE site_id = #{siteId}
+    </delete>
+
+    <!-- 根据站点ID和配置类型查询配置列表 -->
+    <select id="selectBySiteIdAndType" resultType="com.jf.soulartisan.admin.entity.SiteConfig">
+        SELECT * FROM site_config
+        WHERE site_id = #{siteId} AND config_type = #{configType}
+    </select>
+
+</mapper>

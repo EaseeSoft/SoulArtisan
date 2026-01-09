@@ -1,0 +1,5 @@
+{
+  "name": "AdminPro 管理后台",
+  "description": "用于管理站点、用户和内容生成任务的专业管理后台。",
+  "requestFramePermissions": []
+}

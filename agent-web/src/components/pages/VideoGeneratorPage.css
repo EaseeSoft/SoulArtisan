@@ -1,0 +1,169 @@
+/* 视频生成页面样式 - 简约黑色科技风 */
+
+.video-generator-page {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #0a0a0a;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 返回按钮 */
+.video-back-button {
+    position: relative;
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #888;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.video-back-button:hover {
+    background: #1a1a1a;
+    border-color: #00d4ff;
+    color: #00d4ff;
+}
+
+/* 顶部导航栏 */
+.video-page-header {
+    background: #0d0d0d;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.video-page-title {
+    margin: 0;
+    font-size: 18px;
+    color: #00d4ff;
+    font-weight: 600;
+    flex: 1;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* 主内容区域 */
+.video-page-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.video-content-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+/* 左侧生成表单容器 */
+.video-generator-container {
+    background: #111;
+    border-radius: 8px;
+    border: 1px solid #1a1a1a;
+    position: sticky;
+    top: 20px;
+    overflow: hidden;
+}
+
+/* 右侧历史记录容器 */
+.video-history-container {
+    background: #111;
+    border-radius: 8px;
+    border: 1px solid #1a1a1a;
+    overflow: hidden;
+}
+
+/* 底部信息栏 */
+.video-page-footer {
+    background: #0d0d0d;
+    padding: 12px;
+    text-align: center;
+    color: #444;
+    font-size: 12px;
+    border-top: 1px solid #1a1a1a;
+}
+
+.video-page-footer p {
+    margin: 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .video-content-wrapper {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .video-generator-container {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .video-page-header {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+    }
+
+    .video-back-button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .video-page-title {
+        font-size: 16px;
+        flex: 1;
+        text-align: center;
+        order: 1;
+    }
+
+    .video-page-content {
+        padding: 12px;
+    }
+}
+
+/* 加载动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.video-content-wrapper {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* 滚动条样式 */
+.video-page-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.video-page-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.video-page-content::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 2px;
+}
+
+.video-page-content::-webkit-scrollbar-thumb:hover {
+    background: #00d4ff;
+}

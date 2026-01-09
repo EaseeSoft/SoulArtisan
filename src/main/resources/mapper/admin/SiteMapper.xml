@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jf.soulartisan.admin.mapper.SiteMapper">
+
+    <!-- 根据站点编码查询站点 -->
+    <select id="selectBySiteCode" resultType="com.jf.soulartisan.admin.entity.Site">
+        SELECT * FROM site WHERE site_code = #{siteCode} LIMIT 1
+    </select>
+
+    <!-- 根据管理员账号查询站点 -->
+    <select id="selectByAdminUsername" resultType="com.jf.soulartisan.admin.entity.Site">
+        SELECT * FROM site WHERE admin_username = #{adminUsername} LIMIT 1
+    </select>
+
+    <!-- 根据域名查询站点 -->
+    <select id="selectByDomain" resultType="com.jf.soulartisan.admin.entity.Site">
+        SELECT * FROM site WHERE domain = #{domain} AND status = 1 LIMIT 1
+    </select>
+
+    <!-- 统计站点下的用户数量 -->
+    <select id="countUsersBySiteId" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM users
+        WHERE site_id = #{siteId}
+    </select>
+
+</mapper>

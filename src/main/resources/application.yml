@@ -1,0 +1,119 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+  tomcat:
+    # 最大连接数
+    max-connections: 10000
+    # 接受连接的最大等待时间
+    accept-count: 1000
+    # 最大工作线程数
+    max-threads: 200
+    # 最小工作线程数
+    min-spare-threads: 10
+    # 连接超时时间
+    connection-timeout: 300000  # 5分钟
+
+spring:
+  application:
+    name: playlet
+  profiles:
+    active: prod
+  # 禁用 Spring AI 自动配置（使用数据库配置）
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:placeholder}
+      base-url: ${OPENAI_BASE_URL:https://api.openai.com}
+  # MVC 异步请求超时配置
+  mvc:
+    async:
+      request-timeout: 300000  # 5分钟 (300秒)
+  # 文件上传配置
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500MB      # 单个文件最大大小
+      max-request-size: 500MB   # 整个请求最大大小
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/agent_video?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    hikari:
+      pool-name: HikariPool
+      minimum-idle: 5
+      maximum-pool-size: 20
+      auto-commit: true
+      idle-timeout: 600000
+      max-lifetime: 900000         # 15分钟，避免超过 MySQL wait_timeout
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+      keepalive: 30000            # 30秒发送一次保活包，防止连接被 MySQL 关闭
+      validation-timeout: 5000    # 连接验证超时5秒
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: super123321
+      database: 15
+      timeout: 30000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
+          max-wait: 5000ms
+          # 连接保活时间，防止空闲连接被关闭 (30秒)
+          time-between-eviction-runs: 30000ms
+        shutdown-timeout: 100ms
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+# sa-token
+sa-token:
+  token-name: Authorization
+  timeout: 2592000
+  active-timeout: -1
+  is-concurrent: true
+  is-share: false
+  token-style: jwt
+  is-log: false
+  token-prefix: Bearer
+  jwt-secret-key: d60160c01b2d4e85b3e2a9f6b7c1d9e3f2a5b8c4d7e3f1a2b4c6d8e0f1a3b5c7
+
+logging:
+  level:
+    root: INFO
+    com.jf: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/playlet.log
+    max-size: 10MB
+    max-history: 30
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+image-task:
+  poll-interval: 10
+  max-attempts: 60
+
+# 系统配置
+system:
+  # 是否开启用户注册
+  enable-register: true

@@ -1,0 +1,866 @@
+/**
+ * 分镜处理页面样式 - 黑色简约科技风
+ * 参考 ImageGeneratorPage 风格
+ */
+
+/* ==================== 图标尺寸 ==================== */
+.icon {
+  width: 20px;
+  height: 20px;
+}
+.icon-sm {
+  width: 18px;
+  height: 18px;
+}
+.icon-md {
+  width: 24px;
+  height: 24px;
+}
+.icon-lg {
+  width: 32px;
+  height: 32px;
+}
+.icon-xl {
+  width: 48px;
+  height: 48px;
+}
+.icon-xs {
+  width: 12px;
+  height: 12px;
+}
+
+/* ==================== 页面基础 ==================== */
+.storyboard-cut-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #0a0a0a;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ==================== 顶部导航栏 ==================== */
+.storyboard-cut-page .page-header {
+  background: #0d0d0d;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.storyboard-cut-page .back-button {
+  position: relative;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #888;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.storyboard-cut-page .back-button:hover {
+  background: #1a1a1a;
+  border-color: #00d4ff;
+  color: #00d4ff;
+}
+
+.storyboard-cut-page .header-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.storyboard-cut-page .logo-icon {
+  width: 36px;
+  height: 36px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00d4ff;
+}
+
+.storyboard-cut-page .page-title {
+  color: #00d4ff;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: 1px;
+}
+
+.storyboard-cut-page .page-subtitle {
+  color: #444;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.storyboard-cut-page .add-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #888;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.storyboard-cut-page .add-button:hover {
+  background: #1a1a1a;
+  border-color: #00d4ff;
+  color: #00d4ff;
+}
+
+/* ==================== 主内容区域 ==================== */
+.storyboard-cut-page .page-content {
+  flex: 1;
+  padding: 0;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+
+.storyboard-cut-page .grid-layout {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 280px 1fr 320px;
+  gap: 16px;
+  padding: 16px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ==================== 卡片基础样式 ==================== */
+.card {
+  background: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.composition-card {
+  background: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.icon-accent {
+  color: #00d4ff;
+}
+
+.icon-accent-secondary {
+  color: #00d4ff;
+}
+
+/* ==================== 左侧边栏 ==================== */
+.storyboard-cut-page .left-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+}
+
+/* 网格设定卡片 */
+.settings-card {
+  background: #0d0d0d;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.setting-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.setting-label {
+  color: #666;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.setting-input {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: #ccc;
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.setting-input:focus {
+  border-color: #00d4ff;
+  background: #222;
+}
+
+.setting-input::-webkit-inner-spin-button,
+.setting-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* 素材库卡片 */
+.assets-card {
+  background: #0d0d0d;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.assets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  padding-right: 4px;
+  flex: 1;
+}
+
+.assets-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.assets-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.assets-list::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 2px;
+}
+
+.assets-list::-webkit-scrollbar-thumb:hover {
+  background: #00d4ff;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 32px 16px;
+  border: 1px dashed #333;
+  border-radius: 8px;
+}
+
+.empty-text {
+  color: #444;
+  font-size: 12px;
+  margin: 0;
+}
+
+.asset-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.asset-item:hover {
+  border-color: #333;
+  background: #1a1a1a;
+}
+
+.asset-item.active {
+  border-color: #00d4ff;
+  background: #1a1a1a;
+}
+
+.asset-thumbnail {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: #1a1a1a;
+  flex-shrink: 0;
+}
+
+.asset-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.asset-name {
+  color: #888;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.asset-meta {
+  color: #444;
+  font-size: 10px;
+  margin: 2px 0 0 0;
+}
+
+.asset-remove {
+  opacity: 0;
+  padding: 6px;
+  color: #666;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.asset-item:hover .asset-remove {
+  opacity: 1;
+}
+
+.asset-remove:hover {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.1);
+}
+
+/* ==================== 中间面板 ==================== */
+.storyboard-cut-page .middle-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.preview-card {
+  background: #0d0d0a;
+  border: 1px solid #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.preview-title {
+  color: #ccc;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.preview-subtitle {
+  color: #666;
+  font-size: 12px;
+  margin: 4px 0 0 0;
+}
+
+.active-asset-badge {
+  color: #00d4ff;
+  font-size: 11px;
+  font-weight: 600;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.segments-grid {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  background: #0a0a0a;
+  border-radius: 8px;
+  border: 1px solid #1a1a1a;
+  overflow: auto;
+  flex: 1;
+}
+
+.segment-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #333;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #1a1a1a;
+}
+
+.segment-item:hover {
+  border-color: #00d4ff;
+  transform: scale(0.98);
+}
+
+.segment-item:active {
+  transform: scale(0.95);
+}
+
+.segment-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.segment-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 212, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.segment-item:hover .segment-overlay {
+  opacity: 1;
+}
+
+.segment-overlay svg {
+  color: #00d4ff;
+}
+
+.preview-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: #333;
+}
+
+.preview-empty-text {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* ==================== 右侧边栏 ==================== */
+.storyboard-cut-page .right-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+}
+
+/* 重组画板 */
+.composition-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.composition-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.composition-title {
+  color: #ccc;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.clear-link {
+  color: #666;
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 4px 8px;
+}
+
+.clear-link:hover {
+  color: #00d4ff;
+}
+
+.composition-grid {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.composition-slot {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #333;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #1a1a1a;
+}
+
+.composition-slot:hover {
+  border-color: #444;
+}
+
+.composition-slot.active {
+  border-color: #00d4ff;
+  box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+}
+
+.composition-slot.empty {
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slot-number {
+  color: #333;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.slot-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slot-pulse {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #00d4ff;
+  animation: pulse 1.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.composition-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.generate-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #888;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.generate-button:hover:not(:disabled) {
+  background: #1a1a1a;
+  border-color: #00d4ff;
+  color: #00d4ff;
+}
+
+.generate-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.generate-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.merged-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.merged-image-container {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #333;
+  background: #1a1a1a;
+}
+
+.merged-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.download-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #888;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.download-button:hover {
+  background: #1a1a1a;
+  border-color: #00d4ff;
+  color: #00d4ff;
+}
+
+.download-button:active {
+  transform: scale(0.98);
+}
+
+/* 操作指南卡片 */
+.guide-card {
+  background: #0d0d0d;
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  padding: 16px;
+  color: #666;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.guide-card p {
+  margin: 4px 0;
+}
+
+.guide-title {
+  color: #888;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px !important;
+}
+
+/* ==================== Grid Cell 组件 ==================== */
+.storyboard-grid-cell {
+  position: relative;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.storyboard-grid-cell:hover {
+  border-color: #00d4ff;
+  transform: translateY(-1px);
+}
+
+.cell-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cell-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.storyboard-grid-cell:hover .cell-overlay {
+  opacity: 1;
+}
+
+.cell-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.cell-action-btn {
+  width: 36px;
+  height: 36px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #888;
+}
+
+.cell-action-btn:hover {
+  background: #0a0a0a;
+  border-color: #00d4ff;
+  color: #00d4ff;
+}
+
+.cell-number {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #888;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+/* ==================== 工具类 ==================== */
+.hidden {
+  display: none;
+}
+
+/* ==================== 响应式适配 ==================== */
+@media (max-width: 1200px) {
+  .storyboard-cut-page .grid-layout {
+    grid-template-columns: 240px 1fr 280px;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .storyboard-cut-page .grid-layout {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+
+  .storyboard-cut-page .left-sidebar,
+  .storyboard-cut-page .right-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .storyboard-cut-page .left-sidebar > *,
+  .storyboard-cut-page .right-sidebar > * {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .assets-list {
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .storyboard-cut-page .page-header {
+    padding: 12px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .storyboard-cut-page .header-logo {
+    order: -1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .storyboard-cut-page .back-button,
+  .storyboard-cut-page .add-button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .storyboard-cut-page .left-sidebar,
+  .storyboard-cut-page .right-sidebar {
+    flex-direction: column;
+  }
+
+  .settings-grid {
+    gap: 8px;
+  }
+
+  .composition-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .preview-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

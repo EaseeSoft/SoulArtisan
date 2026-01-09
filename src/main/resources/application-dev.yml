@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://43.143.57.153:3306/agent_video_dev?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: agent_video_dev
+    password: YGaM5MAN2Lin46ws
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      #password:
+      database: 13
+      timeout: 30000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
+          max-wait: 5000ms
+          # 连接保活时间，防止空闲连接被关闭 (30秒)
+          time-between-eviction-runs: 30000ms
+        shutdown-timeout: 100ms

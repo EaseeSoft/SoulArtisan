@@ -1,0 +1,542 @@
+.image-display-node {
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid #00eeff;
+  background: #1a1a1a;
+  box-shadow: 0 0 20px rgba(0, 238, 255, 0.2);
+  width: 220px !important;
+  min-width: 220px;
+  max-width: 220px;
+  font-size: 12px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.image-display-node:hover {
+  box-shadow: 0 0 30px rgba(0, 238, 255, 0.4);
+}
+
+.image-display-node .node-header {
+  padding: 8px 12px;
+  border-bottom: 1px solid #00eeff;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #00eeff;
+  border-radius: 0;
+  text-align: center;
+}
+
+.image-display-node .node-header strong {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.image-display-node .node-body {
+  padding: 8px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-display-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #00eeff;
+  width: 100%;
+  height: 100%;
+}
+
+/* 图片区域独立状态样式 */
+.image-section-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #00eeff;
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.image-section-loading p {
+  font-size: 11px;
+  margin: 0;
+}
+
+.image-section-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #ff6666;
+  text-align: center;
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.image-section-error p {
+  margin: 0;
+  font-size: 11px;
+}
+
+.image-section-error .error-message {
+  color: #999;
+  font-size: 10px;
+  max-width: 100%;
+  word-break: break-all;
+}
+
+.image-section-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #999;
+  text-align: center;
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.image-section-empty p {
+  margin: 0;
+  font-size: 11px;
+}
+
+.upload-button-small {
+  padding: 4px 8px;
+  background: linear-gradient(135deg, #00eeff 0%, #0099cc 100%);
+  border: none;
+  border-radius: 4px;
+  color: #1a1a1a;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.upload-button-small:hover {
+  background: linear-gradient(135deg, #00ffff 0%, #00bbee 100%);
+  transform: translateY(-1px);
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(0, 238, 255, 0.3);
+  border-top-color: #00eeff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-state p {
+  font-size: 11px;
+  margin: 0;
+}
+
+.image-display-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 238, 255, 0.05);
+  border-radius: 6px;
+  padding: 6px;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.image-display-wrapper:hover {
+  background: rgba(0, 238, 255, 0.1);
+}
+
+.image-display-wrapper .image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 8px;
+}
+
+.image-display-wrapper:hover .image-overlay {
+  opacity: 1;
+}
+
+.image-overlay span {
+  color: #00eeff;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.image-display-wrapper .download-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0;
+  z-index: 10;
+}
+
+.image-display-wrapper:hover .download-btn {
+  opacity: 1;
+}
+
+.image-display-wrapper .download-btn:hover {
+  background: rgba(0, 238, 255, 0.8);
+}
+
+.image-display-wrapper .download-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.display-image {
+  max-width: 100%;
+  max-height: 104px;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #ff6666;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.error-state p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.error-message {
+  color: #999;
+  font-size: 11px;
+  max-width: 100%;
+  word-break: break-all;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #999;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 11px;
+}
+
+.upload-button {
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #00eeff 0%, #0099cc 100%);
+  border: none;
+  border-radius: 6px;
+  color: #1a1a1a;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0, 238, 255, 0.3);
+}
+
+.upload-button:hover {
+  background: linear-gradient(135deg, #00ffff 0%, #00bbee 100%);
+  box-shadow: 0 4px 12px rgba(0, 238, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.upload-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 238, 255, 0.3);
+}
+
+/* 更换图片按钮 */
+.replace-image-btn {
+  width: 100%;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #666 0%, #444 100%);
+  border: 1px solid #00eeff;
+  border-radius: 6px;
+  color: #00eeff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0, 238, 255, 0.1);
+}
+
+.replace-image-btn:hover {
+  background: linear-gradient(135deg, #777 0%, #555 100%);
+  box-shadow: 0 4px 12px rgba(0, 238, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.replace-image-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 238, 255, 0.1);
+}
+
+/* 按钮行容器 */
+.action-buttons-row {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+
+/* 编辑图片按钮 */
+.edit-image-btn {
+  flex: 1;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(155, 89, 182, 0.3);
+}
+
+.edit-image-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #a66bbe 0%, #9b59b6 100%);
+  box-shadow: 0 4px 12px rgba(155, 89, 182, 0.5);
+  transform: translateY(-1px);
+}
+
+.edit-image-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(155, 89, 182, 0.3);
+}
+
+.edit-image-btn:disabled {
+  background: #555;
+  color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* 小文字按钮 */
+.small-text-btn {
+  font-size: 10px !important;
+}
+
+/* 转视频按钮 */
+.convert-video-btn {
+  flex: 1;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #ff9f43 0%, #ff6b35 100%);
+  border: none;
+  border-radius: 6px;
+  color: #000;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(255, 159, 67, 0.3);
+}
+
+.convert-video-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ffb366 0%, #ff8855 100%);
+  box-shadow: 0 4px 12px rgba(255, 159, 67, 0.5);
+  transform: translateY(-1px);
+}
+
+.convert-video-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(255, 159, 67, 0.3);
+}
+
+.convert-video-btn:disabled {
+  background: #555;
+  color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* 视频提示词区域 */
+.video-prompt-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.video-prompt-label {
+  font-size: 10px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.video-prompt-label .loading-hint {
+  color: #ff9f43;
+  font-size: 9px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.video-prompt-textarea {
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 6px;
+  font-size: 10px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+  min-height: 50px;
+  max-height: 100px;
+  box-sizing: border-box;
+  background: #252525;
+  color: #ddd;
+  line-height: 1.4;
+}
+
+.video-prompt-textarea:focus {
+  outline: none;
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.video-prompt-textarea::placeholder {
+  color: #555;
+  font-size: 10px;
+}
+
+.video-prompt-hint {
+  font-size: 9px;
+  color: #888;
+  text-align: center;
+  padding: 2px 4px;
+  background: rgba(255, 159, 67, 0.1);
+  border-radius: 3px;
+}
+
+/* 图片预览弹窗 */
+.image-preview-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  cursor: pointer;
+}
+
+.image-preview-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  cursor: default;
+}
+
+.preview-image {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 0 40px rgba(0, 238, 255, 0.3);
+}
+
+.preview-close-btn {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.preview-close-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}

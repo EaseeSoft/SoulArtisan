@@ -1,0 +1,563 @@
+.storyboard-node {
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid #ff6b9d;
+  background: #1a1a1a;
+  box-shadow: 0 0 20px rgba(255, 107, 157, 0.2);
+  min-width: 420px;
+  max-width: 450px;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.storyboard-node:hover {
+  box-shadow: 0 0 30px rgba(255, 107, 157, 0.4);
+}
+
+/* 节点头部 */
+.storyboard-node .node-header {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ff6b9d;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #ff6b9d;
+  border-radius: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.storyboard-node .node-header strong {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 右上角小编辑按钮 */
+.edit-btn-small {
+  background: rgba(255, 107, 157, 0.1);
+  border: 1px solid #ff6b9d;
+  border-radius: 4px;
+  color: #ff6b9d;
+  font-size: 12px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.edit-btn-small:hover {
+  background: rgba(255, 107, 157, 0.2);
+  transform: scale(1.1);
+}
+
+.edit-btn-small:active {
+  transform: scale(0.95);
+}
+
+/* 节点主体 */
+.storyboard-node .node-body {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 通用标签样式 */
+.section-label {
+  font-weight: 500;
+  color: #999;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* 项目角色选择器 */
+.character-selector-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 角色加载和空状态 */
+.characters-loading,
+.characters-empty {
+  padding: 12px;
+  background: #252525;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #999;
+  font-size: 12px;
+  text-align: center;
+}
+
+.characters-loading {
+  color: #ff6b9d;
+}
+
+/* 角色标签列表（编辑模式） */
+.character-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px;
+  background: #252525;
+  border-radius: 6px;
+  border: 1px solid #333;
+}
+
+.character-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #ddd;
+  padding: 6px 10px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.character-tag:hover {
+  background: rgba(255, 107, 157, 0.15);
+  border-color: #ff6b9d;
+  color: #ff6b9d;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.2);
+}
+
+.character-tag:active {
+  transform: translateY(0);
+}
+
+.character-tag-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #ff6b9d;
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.character-tag-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder-small {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #ff6b9d;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+}
+
+/* 分镜角色列表（横向展示） */
+.storyboard-characters-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.characters-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 10px;
+  background: #252525;
+  border-radius: 6px;
+  border: 1px solid #333;
+}
+
+.character-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.character-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #ff6b9d;
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.character-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff6b9d;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+}
+
+.character-name {
+  font-size: 11px;
+  color: #ddd;
+  text-align: center;
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 输入区域容器 */
+.input-section {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 文本框包装器（带左上角标签） */
+.textarea-wrapper,
+.display-wrapper {
+  position: relative;
+  padding-top: 8px;
+}
+
+/* 左上角标签 */
+.corner-label {
+  position: absolute;
+  top: -6px;
+  left: 10px;
+  background: #1a1a1a;
+  padding: 2px 8px;
+  font-weight: 500;
+  color: #ff6b9d;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 1;
+  border-radius: 3px;
+  border: 1px solid #ff6b9d;
+}
+
+.copywriting-display,
+.storyboard-display {
+  padding: 12px;
+  background: #252525;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #ddd;
+  font-size: 12px;
+  min-height: 40px;
+  line-height: 1.5;
+}
+
+.copywriting-textarea,
+.storyboard-textarea {
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 12px;
+  padding-top: 14px;
+  font-size: 12px;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background: #252525;
+  color: #ddd;
+}
+
+.copywriting-textarea {
+  min-height: 80px;
+  max-height: 120px;
+}
+
+.storyboard-textarea {
+  min-height: 120px;
+  max-height: 200px;
+}
+
+.copywriting-textarea:focus,
+.storyboard-textarea:focus {
+  outline: none;
+  border-color: #ff6b9d;
+  background: rgba(255, 107, 157, 0.05);
+}
+
+.copywriting-textarea::placeholder,
+.storyboard-textarea::placeholder {
+  color: #555;
+}
+
+/* 编辑操作按钮 */
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.save-btn,
+.cancel-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  font-weight: 500;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
+  color: white;
+}
+
+.save-btn:hover {
+  background: linear-gradient(135deg, #ff8fab 0%, #ffaac3 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
+}
+
+.cancel-btn {
+  background: #333;
+  color: #ddd;
+  border: 1px solid #444;
+}
+
+.cancel-btn:hover {
+  background: #444;
+  border-color: #555;
+}
+
+/* 底部操作栏 */
+.bottom-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* 生成选项区域 */
+.generation-options {
+  width: 100%;
+}
+
+.option-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.option-label {
+  font-size: 10px;
+  color: #999;
+  white-space: nowrap;
+}
+
+.option-select {
+  flex: 1;
+  padding: 6px 8px;
+  background: #252525;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #ddd;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 0;
+}
+
+.option-select:focus {
+  outline: none;
+  border-color: #ff6b9d;
+  background: rgba(255, 107, 157, 0.05);
+}
+
+.option-select:hover {
+  border-color: #ff6b9d;
+}
+
+/* 场景描述和数量组合 */
+.scene-with-count {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.count-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #252525;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 4px 8px;
+  transition: all 0.2s ease;
+}
+
+.count-input-wrapper:focus-within {
+  border-color: #ff6b9d;
+  background: rgba(255, 107, 157, 0.05);
+}
+
+.count-input {
+  width: 40px;
+  background: transparent;
+  border: none;
+  color: #ddd;
+  font-size: 12px;
+  text-align: center;
+  padding: 2px;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.count-input::-webkit-outer-spin-button,
+.count-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.count-label {
+  font-size: 11px;
+  color: #999;
+  white-space: nowrap;
+}
+
+.icon-btn {
+  padding: 8px 12px;
+  background: #252525;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #ddd;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.icon-btn:hover {
+  background: rgba(255, 107, 157, 0.1);
+  border-color: #ff6b9d;
+  color: #ff6b9d;
+  transform: translateY(-1px);
+}
+
+.icon-btn:active {
+  transform: translateY(0);
+}
+
+/* 生成按钮 */
+.storyboard-node .generate-btn {
+  width: 100%;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(255, 107, 157, 0.3);
+}
+
+.generate-btn:hover {
+  background: linear-gradient(135deg, #ff8fab 0%, #ffaac3 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 157, 0.4);
+}
+
+.generate-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(255, 107, 157, 0.3);
+}
+
+.generate-btn:disabled {
+  background: #333;
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.generate-btn:disabled:hover {
+  transform: none;
+}
+
+/* 视频格式选择下拉框 */
+.aspect-ratio-select {
+  padding: 8px 12px;
+  background: #252525;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #ddd;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 90px;
+}
+
+.aspect-ratio-select:focus {
+  outline: none;
+  border-color: #ff6b9d;
+  background: rgba(255, 107, 157, 0.05);
+}
+
+.aspect-ratio-select:hover {
+  border-color: #ff6b9d;
+}
+
+.aspect-ratio-select option {
+  background: #252525;
+  color: #ddd;
+}

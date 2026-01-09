@@ -1,0 +1,279 @@
+/* 视频生成器组件样式 - 简约黑色科技风 */
+
+.video-generator {
+    padding: 20px;
+    background: transparent;
+    color: #e0e0e0;
+}
+
+.video-generator h2 {
+    margin: 0 0 20px 0;
+    font-size: 16px;
+    color: #00d4ff;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.video-form-group {
+    margin-bottom: 16px;
+}
+
+.video-form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #888;
+    font-size: 13px;
+}
+
+.video-form-textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #222;
+    border-radius: 6px;
+    resize: vertical;
+    background: #0d0d0d;
+    color: #e0e0e0;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.video-form-textarea:focus {
+    outline: none;
+    border-color: #00d4ff;
+}
+
+.video-form-textarea::placeholder {
+    color: #444;
+}
+
+.video-form-select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #222;
+    border-radius: 6px;
+    background: #0d0d0d;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.video-form-select:focus {
+    outline: none;
+    border-color: #00d4ff;
+}
+
+.video-form-select option {
+    background: #111;
+    color: #e0e0e0;
+}
+
+.video-form-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.video-form-col {
+    flex: 1;
+}
+
+.video-image-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.video-form-input {
+    flex: 1;
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #222;
+    border-radius: 6px;
+    background: #0d0d0d;
+    color: #e0e0e0;
+    transition: border-color 0.2s ease;
+}
+
+.video-form-input:focus {
+    outline: none;
+    border-color: #00d4ff;
+}
+
+.video-form-input::placeholder {
+    color: #444;
+}
+
+.video-add-button {
+    padding: 10px 16px;
+    font-size: 13px;
+    background: transparent;
+    color: #00d4ff;
+    border: 1px solid #00d4ff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.video-add-button:hover:not(:disabled) {
+    background: rgba(0, 212, 255, 0.1);
+}
+
+.video-add-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* 上传按钮样式 */
+.video-upload-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 13px;
+    background: transparent;
+    color: #00d4ff;
+    border: 1px dashed #00d4ff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.video-upload-button:hover:not(:disabled) {
+    background: rgba(0, 212, 255, 0.1);
+    border-style: solid;
+}
+
+.video-upload-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* 单张图片预览 */
+.video-image-preview-single {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 16 / 9;
+    border: 1px solid #222;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #0d0d0d;
+}
+
+.video-image-preview-single img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.video-image-preview-single .video-image-remove-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 50, 50, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.video-image-preview-single .video-image-remove-button:hover {
+    background: rgba(255, 50, 50, 1);
+    transform: scale(1.1);
+}
+
+.video-image-preview-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.video-image-preview-item {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border: 1px solid #222;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #0d0d0d;
+}
+
+.video-image-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-image-remove-button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(255, 50, 50, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.video-image-remove-button:hover {
+    transform: scale(1.1);
+}
+
+.video-generate-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    background: #00d4ff;
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.2s ease;
+    letter-spacing: 1px;
+}
+
+.video-generate-button:hover:not(:disabled) {
+    background: #00e8ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.video-generate-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.video-status-message {
+    padding: 10px 12px;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    border-radius: 6px;
+    margin-bottom: 10px;
+    color: #00d4ff;
+    font-size: 13px;
+}
+
+.video-error-message {
+    padding: 10px 12px;
+    background: rgba(255, 50, 50, 0.1);
+    border: 1px solid rgba(255, 50, 50, 0.3);
+    border-radius: 6px;
+    color: #ff6b6b;
+    font-size: 13px;
+}

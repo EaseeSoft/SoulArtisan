@@ -1,0 +1,331 @@
+.story-desc-node {
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid #00eeff;
+  background: #1a1a1a;
+  box-shadow: 0 0 20px rgba(0, 238, 255, 0.2);
+  min-width: 600px;
+  max-width: 650px;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.story-desc-node:hover {
+  box-shadow: 0 0 30px rgba(0, 238, 255, 0.4);
+}
+
+.node-header {
+  padding: 12px 15px;
+  border-bottom: 1px solid #00eeff;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #00eeff;
+  border-radius: 0;
+  text-align: center;
+}
+
+.node-header strong {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.node-body {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.story-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.story-label {
+  font-weight: 500;
+  color: #999;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.story-label-hint {
+  font-size: 10px;
+  color: #6366f1;
+  font-weight: 400;
+  text-transform: none;
+  margin-left: 6px;
+}
+
+/* 角色列表网格 */
+.characters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+  gap: 6px;
+  padding: 6px;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.character-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background: #1a1a1a;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.character-item:hover {
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.character-item:active {
+  transform: translateY(0);
+}
+
+.character-item img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 3px;
+  background: #252525;
+}
+
+.character-placeholder {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #252525;
+  border-radius: 3px;
+  font-size: 20px;
+}
+
+.character-name {
+  font-size: 9px;
+  color: #999;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.character-item:hover .character-name {
+  color: #00eeff;
+}
+
+.characters-loading,
+.characters-empty {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 6px;
+}
+
+/* 剧情描述文本框 */
+.story-textarea {
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 12px;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.3s ease;
+  min-height: 180px;
+  max-height: 300px;
+  box-sizing: border-box;
+  background: #252525;
+  color: #ddd;
+  line-height: 1.5;
+}
+
+.story-textarea:focus {
+  outline: none;
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.story-textarea::placeholder {
+  color: #555;
+}
+
+/* 风格和时长控制 */
+.story-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-label {
+  font-weight: 500;
+  color: #999;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.story-select {
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 12px;
+  background: #252525;
+  color: #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.story-select:hover {
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.story-select:focus {
+  outline: none;
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.story-select option {
+  background: #1a1a1a;
+  color: #ddd;
+}
+
+.story-input {
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 12px;
+  background: #252525;
+  color: #ddd;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.story-input:hover {
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.story-input:focus {
+  outline: none;
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.story-input::placeholder {
+  color: #555;
+}
+
+/* 隐藏 number input 的上下调节按钮 */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+/* 生成按钮 */
+.story-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #333;
+}
+
+.action-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #00eeff 0%, #0088ff 100%);
+  color: #000;
+}
+
+.action-btn.primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #00ffff 0%, #00aaff 100%);
+  box-shadow: 0 0 15px rgba(0, 238, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.action-btn.secondary {
+  background: linear-gradient(135deg, #ff9000 0%, #ff6000 100%);
+  color: #fff;
+}
+
+.action-btn.secondary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ffa020 0%, #ff7020 100%);
+  box-shadow: 0 0 15px rgba(255, 144, 0, 0.5);
+  transform: translateY(-2px);
+}
+
+.action-btn:disabled {
+  background: #333;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* 滚动条样式 */
+.characters-grid::-webkit-scrollbar,
+.story-textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+.characters-grid::-webkit-scrollbar-track,
+.story-textarea::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 3px;
+}
+
+.characters-grid::-webkit-scrollbar-thumb,
+.story-textarea::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+.characters-grid::-webkit-scrollbar-thumb:hover,
+.story-textarea::-webkit-scrollbar-thumb:hover {
+  background: #00eeff;
+}

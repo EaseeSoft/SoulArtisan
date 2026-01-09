@@ -1,0 +1,175 @@
+/* 角色解析节点样式 */
+.role-analysis-node {
+  background: linear-gradient(135deg, #1e1e2e 0%, #2a2a3e 100%);
+  border: 2px solid #667eea;
+  border-radius: 12px;
+  padding: 0;
+  width: 400px;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+}
+
+.role-analysis-node .node-header {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  padding: 12px 16px;
+  border-radius: 10px 10px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+}
+
+.role-analysis-node .node-body {
+  padding: 16px;
+}
+
+/* 输入区域 */
+.role-analysis-section {
+  margin-bottom: 16px;
+}
+
+.role-analysis-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #00d4ff;
+  margin-bottom: 8px;
+}
+
+.role-analysis-textarea {
+  width: 100%;
+  min-height: 220px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 1.6;
+  resize: vertical;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.role-analysis-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.role-analysis-textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.role-analysis-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* 字符计数 */
+.char-count {
+  font-size: 11px;
+  color: #999;
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* 错误提示 */
+.error-message {
+  padding: 10px 12px;
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid rgba(255, 68, 68, 0.3);
+  border-radius: 6px;
+  color: #ff6b6b;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+/* 提取结果展示 */
+.extracted-roles {
+  padding: 12px;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 1.6;
+  max-height: 200px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.extracted-roles::-webkit-scrollbar {
+  width: 6px;
+}
+
+.extracted-roles::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.extracted-roles::-webkit-scrollbar-thumb {
+  background: rgba(102, 126, 234, 0.5);
+  border-radius: 3px;
+}
+
+.extracted-roles::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 126, 234, 0.7);
+}
+
+/* 提取按钮容器 */
+.extract-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+/* 提取按钮 */
+.extract-btn {
+  flex: 1;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.extract-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.extract-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.extract-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 图片角色提示词按钮特殊样式 */
+.extract-btn.image-prompt-btn {
+  background: linear-gradient(90deg, #ff9f43 0%, #ff6b35 100%);
+  box-shadow: 0 4px 12px rgba(255, 159, 67, 0.3);
+}
+
+.extract-btn.image-prompt-btn:hover:not(:disabled) {
+  box-shadow: 0 6px 16px rgba(255, 159, 67, 0.4);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .role-analysis-node {
+    width: 320px;
+  }
+}

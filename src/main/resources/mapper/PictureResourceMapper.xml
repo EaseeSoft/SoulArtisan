@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jf.soulartisan.mapper.PictureResourceMapper">
+
+    <!-- 根据用户ID查询图片资源列表 -->
+    <select id="selectByUserId" resultType="com.jf.soulartisan.entity.PictureResource">
+        SELECT *
+        FROM picture_resources
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据站点ID查询图片资源列表 -->
+    <select id="selectBySiteId" resultType="com.jf.soulartisan.entity.PictureResource">
+        SELECT *
+        FROM picture_resources
+        WHERE site_id = #{siteId}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据项目ID查询图片资源列表 -->
+    <select id="selectByProjectId" resultType="com.jf.soulartisan.entity.PictureResource">
+        SELECT *
+        FROM picture_resources
+        WHERE project_id = #{projectId}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据项目ID和类型查询图片资源列表 -->
+    <select id="selectByProjectIdAndType" resultType="com.jf.soulartisan.entity.PictureResource">
+        SELECT *
+        FROM picture_resources
+        WHERE project_id = #{projectId}
+          AND type = #{type}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据剧本ID查询图片资源列表 -->
+    <select id="selectByScriptId" resultType="com.jf.soulartisan.entity.PictureResource">
+        SELECT *
+        FROM picture_resources
+        WHERE script_id = #{scriptId}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据剧本ID和类型查询图片资源列表 -->
+    <select id="selectByScriptIdAndType" resultType="com.jf.soulartisan.entity.PictureResource">
+        SELECT *
+        FROM picture_resources
+        WHERE script_id = #{scriptId}
+          AND type = #{type}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据类型查询图片资源列表 -->
+    <select id="selectByType" resultType="com.jf.soulartisan.entity.PictureResource">
+        SELECT *
+        FROM picture_resources
+        WHERE type = #{type}
+        ORDER BY created_at DESC
+    </select>
+
+</mapper>

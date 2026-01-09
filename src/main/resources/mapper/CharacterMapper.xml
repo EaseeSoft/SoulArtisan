@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jf.soulartisan.mapper.CharacterMapper">
+
+    <!-- 根据角色ID查询 -->
+    <select id="selectByCharacterId" resultType="com.jf.soulartisan.entity.Character">
+        SELECT * FROM characters WHERE character_id = #{characterId} LIMIT 1
+    </select>
+
+    <!-- 根据创建任务ID查询 -->
+    <select id="selectByGenerationTaskId" resultType="com.jf.soulartisan.entity.Character">
+        SELECT * FROM characters WHERE generation_task_id = #{generationTaskId} LIMIT 1
+    </select>
+
+    <!-- 根据视频任务ID查询角色列表 -->
+    <select id="selectByVideoTaskId" resultType="com.jf.soulartisan.entity.Character">
+        SELECT * FROM characters WHERE video_task_id = #{videoTaskId}
+    </select>
+
+    <!-- 查询待处理的角色任务 -->
+    <select id="selectPendingTasks" resultType="com.jf.soulartisan.entity.Character">
+        SELECT * FROM characters
+        WHERE status IN ('pending', 'processing')
+        ORDER BY created_at ASC
+        LIMIT #{limit}
+    </select>
+
+    <!-- 根据用户ID查询角色列表 -->
+    <select id="selectByUserId" resultType="com.jf.soulartisan.entity.Character">
+        SELECT * FROM characters
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+    </select>
+
+    <!-- 根据工作流项目ID查询角色列表 -->
+    <select id="selectByWorkflowProjectId" resultType="com.jf.soulartisan.entity.Character">
+        SELECT * FROM characters
+        WHERE workflow_project_id = #{workflowProjectId}
+        ORDER BY created_at DESC
+    </select>
+
+</mapper>

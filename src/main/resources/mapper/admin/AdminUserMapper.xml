@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jf.soulartisan.admin.mapper.AdminUserMapper">
+
+    <!-- 根据用户名查询管理员 -->
+    <select id="selectByUsername" resultType="com.jf.soulartisan.admin.entity.AdminUser">
+        SELECT * FROM admin_user WHERE username = #{username} LIMIT 1
+    </select>
+
+    <!-- 根据站点ID查询站点管理员 -->
+    <select id="selectBySiteId" resultType="com.jf.soulartisan.admin.entity.AdminUser">
+        SELECT * FROM admin_user WHERE site_id = #{siteId} LIMIT 1
+    </select>
+
+    <!-- 根据站点ID删除站点管理员 -->
+    <delete id="deleteBySiteId">
+        DELETE FROM admin_user WHERE site_id = #{siteId}
+    </delete>
+
+    <!-- 更新最后登录信息 -->
+    <update id="updateLastLoginInfo">
+        UPDATE admin_user
+        SET last_login_time = NOW(),
+            last_login_ip = #{lastLoginIp}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

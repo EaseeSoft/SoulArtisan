@@ -1,0 +1,146 @@
+.hero {
+  background: #000;
+  color: #fff;
+  padding: 120px 20px 100px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse 100% 60% at 50% -10%, rgba(0, 240, 255, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  font-weight: 300;
+  letter-spacing: 4px;
+}
+
+.hero h1 span {
+  color: #00f0ff;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.8;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  letter-spacing: 0.5px;
+}
+
+.cta-button {
+  background: transparent;
+  color: #00f0ff;
+  border: 1px solid #00f0ff;
+  padding: 16px 48px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.cta-button:hover {
+  background: #00f0ff;
+  color: #000;
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 80px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  padding: 32px 24px;
+  transition: all 0.2s ease;
+}
+
+.feature-card:hover {
+  border-color: rgba(0, 240, 255, 0.3);
+  background: rgba(0, 240, 255, 0.02);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  filter: grayscale(100%);
+  opacity: 0.8;
+}
+
+.feature-card:hover .feature-icon {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+.feature-card h3 {
+  color: #fff;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.feature-card p {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 80px 20px 60px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .cta-button {
+    padding: 14px 36px;
+    font-size: 13px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 60px;
+  }
+}

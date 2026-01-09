@@ -1,0 +1,117 @@
+.scene-description-node {
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid #00eeff;
+  background: #1a1a1a;
+  box-shadow: 0 0 20px rgba(0, 238, 255, 0.2);
+  min-width: 380px;
+  max-width: 400px;
+  font-size: 13px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.scene-description-node:hover {
+  box-shadow: 0 0 30px rgba(0, 238, 255, 0.4);
+}
+
+.scene-description-node .node-header {
+  padding: 12px 15px;
+  border-bottom: 1px solid #00eeff;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #00eeff;
+  border-radius: 0;
+  text-align: center;
+}
+
+.scene-description-node .node-header strong {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scene-description-node .node-body {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.scene-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scene-label {
+  font-weight: 500;
+  color: #999;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.char-count {
+  font-size: 10px;
+  color: #666;
+  font-weight: normal;
+}
+
+.scene-textarea {
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 12px;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.3s ease;
+  min-height: 120px;
+  max-height: 180px;
+  box-sizing: border-box;
+  background: #252525;
+  color: #ddd;
+}
+
+.scene-textarea:focus {
+  outline: none;
+  border-color: #00eeff;
+  background: rgba(0, 238, 255, 0.05);
+}
+
+.scene-textarea::placeholder {
+  color: #555;
+}
+
+.quick-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-button {
+  padding: 5px 10px;
+  background: #252525;
+  border: 1px solid #333;
+  border-radius: 4px;
+  color: #ddd;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tag-button:hover {
+  background: rgba(0, 238, 255, 0.1);
+  border-color: #00eeff;
+  color: #00eeff;
+  transform: translateY(-1px);
+}
+
+.tag-button:active {
+  transform: translateY(0);
+}
