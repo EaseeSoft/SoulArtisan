@@ -208,20 +208,22 @@ function App() {
           </div>
         </header>
 
-        <Canvas 
-          items={items} 
-          zoom={zoom} 
-          onZoomChange={setZoom}
-          pan={pan} 
-          onPanChange={setPan} 
-          onItemUpdate={handleUpdateItem}
-          onItemDelete={(id) => handleDeleteItems([id])}
-          onItemDeleteMultiple={handleDeleteItems}
-          onItemAdd={(item) => { setItems(prev => [...prev, item]); setSelectedIds([item.id]); }}
-          selectedIds={selectedIds} 
-          setSelectedIds={setSelectedIds}
-        />
-        
+        <div className="flex-1 pt-16">
+          <Canvas
+            items={items}
+            zoom={zoom}
+            onZoomChange={setZoom}
+            pan={pan}
+            onPanChange={setPan}
+            onItemUpdate={handleUpdateItem}
+            onItemDelete={(id) => handleDeleteItems([id])}
+            onItemDeleteMultiple={handleDeleteItems}
+            onItemAdd={(item) => { setItems(prev => [...prev, item]); setSelectedIds([item.id]); }}
+            selectedIds={selectedIds}
+            setSelectedIds={setSelectedIds}
+          />
+        </div>
+
         <Toolbar 
           zoom={zoom} 
           onZoomChange={setZoom} 

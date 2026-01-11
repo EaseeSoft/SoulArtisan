@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@google/genai": "^1.34.0",
+    "@imgly/background-removal": "^1.7.0",
+    "@mediapipe/selfie_segmentation": "^0.1.1675465747",
+    "@tensorflow-models/body-segmentation": "^1.0.2",
+    "@tensorflow/tfjs": "^4.22.0",
     "konva": "^10.0.12",
     "lucide-react": "^0.562.0",
     "react": "^19.2.3",

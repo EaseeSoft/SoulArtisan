@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Stage, Layer, Image as KonvaImage, Rect, Transformer, Line, Group } from 'react-konva';
 import { CanvasItem } from '../types';
+import { removeBackground } from '@imgly/background-removal';
 import {
   Loader2, PenTool, Type, ChevronDown, Download,
   MessageSquarePlus, Scissors, Maximize2, Video,
@@ -119,6 +120,10 @@ const Canvas: React.FC<CanvasProps> = ({
 
   // 自定义光标位置
   const [cursorPos, setCursorPos] = useState<{ x: number; y: number } | null>(null);
+
+  // 抠图状态
+  const [isSegmenting, setIsSegmenting] = useState(false);
+  const [maskImage, setMaskImage] = useState<HTMLImageElement | null>(null);
 
   // 获取选中的单个图片项
   const selectedItem = selectedIds.length === 1 ? items.find(i => i.id === selectedIds[0]) : null;
@@ -331,6 +336,70 @@ const Canvas: React.FC<CanvasProps> = ({
     setLines([]);
     setLineHistory([]);
     setHistoryIndex(-1);
+    setMaskImage(null);
+  };
+
+  // 抠图 - 使用 imgly 进行精准主体分割
+  const handleSegmentation = async () => {
+    if (!selectedItem || !selectedItem.content) return;
+
+    setIsSegmenting(true);
+    try {
+      // 将 base64 转换为 Blob
+      const response = await fetch(selectedItem.content);
+      const blob = await response.blob();
+
+      // 使用 imgly 进行背景移除，获取蒙版
+      const maskBlob = await removeBackground(blob, {
+        output: { format: 'image/png', type: 'mask' }
+      });
+
+      // 创建蒙版图像
+      const maskUrl = URL.createObjectURL(maskBlob);
+      const maskImg = new window.Image();
+      maskImg.src = maskUrl;
+      await new Promise((resolve) => { maskImg.onload = resolve; });
+
+      // 创建带颜色的蒙版
+      const canvas = document.createElement('canvas');
+      canvas.width = selectedItem.width;
+      canvas.height = selectedItem.height;
+      const ctx = canvas.getContext('2d')!;
+
+      // 绘制缩放后的蒙版
+      ctx.drawImage(maskImg, 0, 0, selectedItem.width, selectedItem.height);
+      const imageData = ctx.getImageData(0, 0, selectedItem.width, selectedItem.height);
+
+      // 将白色区域转换为半透明蓝色蒙版
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        const brightness = imageData.data[i]; // 蒙版是灰度图
+        if (brightness > 128) {
+          imageData.data[i] = 59;      // R
+          imageData.data[i + 1] = 130; // G
+          imageData.data[i + 2] = 246; // B
+          imageData.data[i + 3] = 128; // A (半透明)
+        } else {
+          imageData.data[i + 3] = 0;   // 透明
+        }
+      }
+
+      ctx.putImageData(imageData, 0, 0);
+
+      // 转换为图像
+      const coloredMaskImg = new window.Image();
+      coloredMaskImg.src = canvas.toDataURL();
+      await new Promise((resolve) => { coloredMaskImg.onload = resolve; });
+
+      setMaskImage(coloredMaskImg);
+      setEditMode('inpaint');
+      setLines([]); // 清空手绘线条
+
+      URL.revokeObjectURL(maskUrl);
+    } catch (error) {
+      console.error('Segmentation failed:', error);
+    } finally {
+      setIsSegmenting(false);
+    }
   };
 
   // 选择节点
@@ -347,7 +416,7 @@ const Canvas: React.FC<CanvasProps> = ({
   return (
     <div
       ref={containerRef}
-      className="flex-1 relative overflow-hidden canvas-grid bg-[#f5f5f5]"
+      className="w-full h-full overflow-hidden canvas-grid bg-[#f5f5f5]"
       style={{ cursor: editMode !== 'none' ? 'none' : 'default' }}
       onMouseLeave={() => setCursorPos(null)}
     >
@@ -384,10 +453,19 @@ const Canvas: React.FC<CanvasProps> = ({
           ))}
         </Layer>
 
-        {/* 蒙版绘制层 - 相对��选中图片 */}
+        {/* 蒙版绘制层 - 相对于选中图片 */}
         {editMode !== 'none' && selectedItem && (
           <Layer>
             <Group x={selectedItem.x} y={selectedItem.y} clipWidth={selectedItem.width} clipHeight={selectedItem.height}>
+              {/* AI 生成的蒙版图像 */}
+              {maskImage && (
+                <KonvaImage
+                  image={maskImage}
+                  width={selectedItem.width}
+                  height={selectedItem.height}
+                />
+              )}
+              {/* 手绘线条 */}
               {lines.map((line, i) => (
                 <Line
                   key={i}
@@ -454,9 +532,13 @@ const Canvas: React.FC<CanvasProps> = ({
             <span>超清</span>
             <ChevronDown size={14} />
           </button>
-          <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-            <Scissors size={16} />
-            <span>抠图</span>
+          <button
+            onClick={handleSegmentation}
+            disabled={isSegmenting}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+          >
+            {isSegmenting ? <Loader2 size={16} className="animate-spin" /> : <Scissors size={16} />}
+            <span>{isSegmenting ? '识别中...' : '抠图'}</span>
           </button>
           <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
             <Scan size={16} />
