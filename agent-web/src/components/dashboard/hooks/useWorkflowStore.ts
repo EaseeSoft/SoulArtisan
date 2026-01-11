@@ -2,33 +2,11 @@ import { create } from 'zustand';
 import type { Edge } from 'reactflow';
 import { createProject, updateProject, getProject, type WorkflowData } from '@/api/workflowProject';
 import { getAllEnums, type AllEnums } from '@/api/enums';
-import {
-  getProjectResources,
-  getScriptResources,
-  type VideoResourceInfo,
-} from '@/api/videoResource';
 
 interface NodeOutputData {
   [nodeId: string]: {
     [portId: string]: any;
   };
-}
-
-// 解析出的资源类型
-export interface ParsedAsset {
-  id: string;
-  name: string;
-  type: 'character' | 'scene' | 'prop' | 'skill';
-  prompt: string;
-}
-
-// 资源选择弹框状态
-interface ResourceSelectionModalState {
-  isOpen: boolean;
-  modalType: 'video' | 'picture' | null;
-  assets: ParsedAsset[];
-  sourceNodeId: string | null;
-  onBatchCreate: ((selectedAssets: ParsedAsset[]) => void) | null;
 }
 
 // 图片预览状态
@@ -110,105 +88,6 @@ interface WorkflowStore {
    * 获取缓存的枚举数据
    */
   getEnumsCache: () => AllEnums | null;
-
-  // ========== 资源缓存管理 ==========
-  resourcesCache: VideoResourceInfo[];
-  isLoadingResources: boolean;
-
-  /**
-   * 加载项目资源到缓存
-   */
-  loadResourcesCache: (projectId: number) => Promise<void>;
-
-  /**
-   * 获取缓存的资源数据
-   */
-  getResourcesCache: () => VideoResourceInfo[];
-
-  /**
-   * 设置资源缓存（供外部更新）
-   */
-  setResourcesCache: (resources: VideoResourceInfo[]) => void;
-
-  /**
-   * 添加单个资源到缓存
-   */
-  addResourceToCache: (resource: VideoResourceInfo) => void;
-
-  /**
-   * 从缓存中移除资源
-   */
-  removeResourceFromCache: (resourceId: number) => void;
-
-  /**
-   * 更新缓存中的资源
-   */
-  updateResourceInCache: (resource: VideoResourceInfo) => void;
-
-  // ========== 剧本资源缓存管理 ==========
-  scriptResourcesCache: VideoResourceInfo[];
-  isLoadingScriptResources: boolean;
-
-  /**
-   * 加载剧本资源到缓存
-   */
-  loadScriptResourcesCache: (scriptId: number) => Promise<void>;
-
-  /**
-   * 获取缓存的剧本资源数据
-   */
-  getScriptResourcesCache: () => VideoResourceInfo[];
-
-  /**
-   * 获取有效的资源列表（优先剧本资源，否则项目资源）
-   */
-  getEffectiveResources: () => VideoResourceInfo[];
-
-  // ========== 兼容旧方法名 ==========
-  /** @deprecated 使用 resourcesCache */
-  charactersCache: VideoResourceInfo[];
-  /** @deprecated 使用 isLoadingResources */
-  isLoadingCharacters: boolean;
-  /** @deprecated 使用 loadResourcesCache */
-  loadCharactersCache: (projectId: number) => Promise<void>;
-  /** @deprecated 使用 getResourcesCache */
-  getCharactersCache: () => VideoResourceInfo[];
-  /** @deprecated 使用 setResourcesCache */
-  setCharactersCache: (characters: VideoResourceInfo[]) => void;
-  /** @deprecated 使用 addResourceToCache */
-  addCharacterToCache: (character: VideoResourceInfo) => void;
-  /** @deprecated 使用 removeResourceFromCache */
-  removeCharacterFromCache: (characterId: number) => void;
-  /** @deprecated 使用 updateResourceInCache */
-  updateCharacterInCache: (character: VideoResourceInfo) => void;
-  /** @deprecated 使用 scriptResourcesCache */
-  scriptCharactersCache: VideoResourceInfo[];
-  /** @deprecated 使用 isLoadingScriptResources */
-  isLoadingScriptCharacters: boolean;
-  /** @deprecated 使用 loadScriptResourcesCache */
-  loadScriptCharactersCache: (scriptId: number) => Promise<void>;
-  /** @deprecated 使用 getScriptResourcesCache */
-  getScriptCharactersCache: () => VideoResourceInfo[];
-  /** @deprecated 使用 getEffectiveResources */
-  getEffectiveCharacters: () => VideoResourceInfo[];
-
-  // ========== 资源选择弹框管理 ==========
-  resourceSelectionModal: ResourceSelectionModalState;
-
-  /**
-   * 打开资源选择弹框
-   */
-  openResourceSelectionModal: (
-    modalType: 'video' | 'picture',
-    assets: ParsedAsset[],
-    sourceNodeId: string,
-    onBatchCreate: (selectedAssets: ParsedAsset[]) => void
-  ) => void;
-
-  /**
-   * 关闭资源选择弹框
-   */
-  closeResourceSelectionModal: () => void;
 
   // ========== 图片预览管理 ==========
   imagePreview: ImagePreviewState;
@@ -318,16 +197,7 @@ export const useWorkflowStore = create<WorkflowStore>((set, get) => ({
         currentProjectStyle: project.style || null,
         nodeOutputs: (project.workflowData?.nodeOutputs as NodeOutputData) || {},
         lastSavedAt: new Date(project.updatedAt),
-        resourcesCache: [], // 清空资源缓存
-        scriptResourcesCache: [], // 清空剧本资源缓存
       });
-
-      // 如果有绑定剧本，加载剧本资源，否则加载项目资源
-      if (project.scriptId) {
-        get().loadScriptResourcesCache(project.scriptId);
-      } else {
-        get().loadResourcesCache(project.id);
-      }
 
       return {
         nodes: project.workflowData?.nodes || [],
@@ -361,8 +231,7 @@ export const useWorkflowStore = create<WorkflowStore>((set, get) => ({
       currentProjectStyle: null,
       nodeOutputs: {},
       lastSavedAt: null,
-      resourcesCache: [], // 清空资源缓存
-      scriptResourcesCache: [], // 清空剧本资源缓存
+
     });
   },
 
@@ -400,170 +269,13 @@ export const useWorkflowStore = create<WorkflowStore>((set, get) => ({
   },
 
   // ========== 资源缓存管理 ==========
-  resourcesCache: [],
-  isLoadingResources: false,
 
-  loadResourcesCache: async (projectId: number) => {
-    const state = get();
 
-    // 如果正在加载，跳过
-    if (state.isLoadingResources) {
-      return;
-    }
+  
 
-    set({ isLoadingResources: true });
+  
 
-    try {
-      const response = await getProjectResources(projectId);
-      if (response.code === 200 && response.data.resources) {
-        set({ resourcesCache: response.data.resources });
-        console.log('资源缓存加载成功，共', response.data.resources.length, '个资源');
-      }
-    } catch (error) {
-      console.error('加载资源缓存失败:', error);
-    } finally {
-      set({ isLoadingResources: false });
-    }
-  },
-
-  getResourcesCache: () => {
-    return get().resourcesCache;
-  },
-
-  setResourcesCache: (resources: VideoResourceInfo[]) => {
-    set({ resourcesCache: resources });
-  },
-
-  addResourceToCache: (resource: VideoResourceInfo) => {
-    set((state) => ({
-      resourcesCache: [...state.resourcesCache, resource],
-    }));
-  },
-
-  removeResourceFromCache: (resourceId: number) => {
-    set((state) => ({
-      resourcesCache: state.resourcesCache.filter((r) => r.id !== resourceId),
-    }));
-  },
-
-  updateResourceInCache: (resource: VideoResourceInfo) => {
-    set((state) => ({
-      resourcesCache: state.resourcesCache.map((r) =>
-        r.id === resource.id ? resource : r
-      ),
-    }));
-  },
-
-  // ========== 剧本资源缓存管理 ==========
-  scriptResourcesCache: [],
-  isLoadingScriptResources: false,
-
-  loadScriptResourcesCache: async (scriptId: number) => {
-    const state = get();
-
-    // 如果正在加载，跳过
-    if (state.isLoadingScriptResources) {
-      return;
-    }
-
-    set({ isLoadingScriptResources: true });
-
-    try {
-      const response = await getScriptResources(scriptId);
-      if (response.code === 200 && response.data.resources) {
-        set({ scriptResourcesCache: response.data.resources });
-        console.log('剧本资源缓存加载成功，共', response.data.resources.length, '个资源');
-      }
-    } catch (error) {
-      console.error('加载剧本资源缓存失败:', error);
-    } finally {
-      set({ isLoadingScriptResources: false });
-    }
-  },
-
-  getScriptResourcesCache: () => {
-    return get().scriptResourcesCache;
-  },
-
-  getEffectiveResources: () => {
-    const state = get();
-    // 优先返回剧本资源，如果没有剧本则返回项目资源
-    return state.currentScriptId ? state.scriptResourcesCache : state.resourcesCache;
-  },
-
-  // ========== 兼容旧方法名（映射到新方法）==========
-  get charactersCache() {
-    return get().resourcesCache;
-  },
-  get isLoadingCharacters() {
-    return get().isLoadingResources;
-  },
-  loadCharactersCache: async (projectId: number) => {
-    return get().loadResourcesCache(projectId);
-  },
-  getCharactersCache: () => {
-    return get().getResourcesCache();
-  },
-  setCharactersCache: (characters: VideoResourceInfo[]) => {
-    get().setResourcesCache(characters);
-  },
-  addCharacterToCache: (character: VideoResourceInfo) => {
-    get().addResourceToCache(character);
-  },
-  removeCharacterFromCache: (characterId: number) => {
-    get().removeResourceFromCache(characterId);
-  },
-  updateCharacterInCache: (character: VideoResourceInfo) => {
-    get().updateResourceInCache(character);
-  },
-  get scriptCharactersCache() {
-    return get().scriptResourcesCache;
-  },
-  get isLoadingScriptCharacters() {
-    return get().isLoadingScriptResources;
-  },
-  loadScriptCharactersCache: async (scriptId: number) => {
-    return get().loadScriptResourcesCache(scriptId);
-  },
-  getScriptCharactersCache: () => {
-    return get().getScriptResourcesCache();
-  },
-  getEffectiveCharacters: () => {
-    return get().getEffectiveResources();
-  },
-
-  // ========== 资源选择弹框管理 ==========
-  resourceSelectionModal: {
-    isOpen: false,
-    modalType: null,
-    assets: [],
-    sourceNodeId: null,
-    onBatchCreate: null,
-  },
-
-  openResourceSelectionModal: (modalType, assets, sourceNodeId, onBatchCreate) => {
-    set({
-      resourceSelectionModal: {
-        isOpen: true,
-        modalType,
-        assets,
-        sourceNodeId,
-        onBatchCreate,
-      },
-    });
-  },
-
-  closeResourceSelectionModal: () => {
-    set({
-      resourceSelectionModal: {
-        isOpen: false,
-        modalType: null,
-        assets: [],
-        sourceNodeId: null,
-        onBatchCreate: null,
-      },
-    });
-  },
+  
 
   // ========== 图片预览管理 ==========
   imagePreview: {

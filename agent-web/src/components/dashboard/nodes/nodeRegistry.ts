@@ -380,365 +380,37 @@ export const videoDisplayNodeConfig: NodeConfig = {
 /**
  * 角色生成节点配置
  */
-export const characterGenerationNodeConfig: NodeConfig = {
-  type: 'characterGenerationNode',
-  label: '角色生成',
-  icon: '🎭',
-  category: NodeCategory.PROCESS,
-  description: '生成角色视频',
-  inputs: [],
-  outputs: [
-    {
-      id: 'character',
-      name: '角色视频',
-      dataType: PortDataType.VIDEO,
-      description: '生成的角色视频'
-    }
-  ],
-  defaultData: {
-    label: '角色生成',
-    prompt: '',
-    duration: 10,
-    style: '',
-    referenceImage: '',
-    outputCharacter: null,
-  },
-  contextMenu: [
-    {
-      id: 'regenerate',
-      label: '重新生成',
-      type: MenuItemType.ACTION,
-      icon: '🔄',
-    },
-    {
-      id: 'divider1',
-      label: '',
-      type: MenuItemType.DIVIDER,
-    },
-    {
-      id: 'delete',
-      label: '删除节点',
-      type: MenuItemType.ACTION,
-      icon: '🗑️',
-    }
-  ]
-};
+
 
 /**
  * 分镜脚本节点配置
  */
-export const storyboardNodeConfig: NodeConfig = {
-  type: 'storyboardNode',
-  label: '生成分镜',
-  icon: '📋',
-  category: NodeCategory.PROCESS,
-  description: '生成分镜脚本',
-  inputs: [
-    {
-      id: 'character',
-      name: '角色',
-      dataType: PortDataType.JSON,
-      required: false,
-      description: '可选的角色数据'
-    }
-  ],
-  outputs: [
-    {
-      id: 'storyboard',
-      name: '分镜数据',
-      dataType: PortDataType.ARRAY,
-      description: '分镜列表'
-    }
-  ],
-  defaultData: {
-    label: '生成分镜',
-    story: '',
-    scenes: [],
-  },
-  contextMenu: [
-    {
-      id: 'regenerate',
-      label: '重新生成',
-      type: MenuItemType.ACTION,
-      icon: '🔄',
-    },
-    {
-      id: 'batchGenerate',
-      label: '批量生成图片',
-      type: MenuItemType.ACTION,
-      icon: '🖼️',
-      onClick: async (nodeId, nodeData) => {
-        console.log('批量生成分镜图片', nodeId, nodeData);
-      }
-    },
-    {
-      id: 'export',
-      label: '导出脚本',
-      type: MenuItemType.ACTION,
-      icon: '💾',
-    },
-    {
-      id: 'divider1',
-      label: '',
-      type: MenuItemType.DIVIDER,
-    },
-    {
-      id: 'delete',
-      label: '删除节点',
-      type: MenuItemType.ACTION,
-      icon: '🗑️',
-    }
-  ]
-};
+
 
 /**
  * 剧情描述节点配置
  */
-export const storyDescriptionNodeConfig: NodeConfig = {
-  type: 'storyDescriptionNode',
-  label: '剧情描述',
-  icon: '📝',
-  category: NodeCategory.PROCESS,
-  description: '编写剧情描述并生成分镜',
-  inputs: [],
-  outputs: [
-    {
-      id: 'storyboard',
-      name: '分镜数据',
-      dataType: PortDataType.ARRAY,
-      description: '生成的分镜列表'
-    }
-  ],
-  defaultData: {
-    label: '剧情描述',
-    storyContent: '',
-    style: '',
-    duration: 10,
-  },
-  contextMenu: [
-    {
-      id: 'regenerate',
-      label: '重新生成分镜',
-      type: MenuItemType.ACTION,
-      icon: '🔄',
-    },
-    {
-      id: 'divider1',
-      label: '',
-      type: MenuItemType.DIVIDER,
-    },
-    {
-      id: 'delete',
-      label: '删除节点',
-      type: MenuItemType.ACTION,
-      icon: '🗑️',
-    }
-  ]
-};
+
 
 /**
  * 小说输入节点配置
  */
-export const roleAnalysisNodeConfig: NodeConfig = {
-  type: 'roleAnalysisNode',
-  label: '小说输入',
-  icon: '📚',
-  category: NodeCategory.PROCESS,
-  description: '使用AI分析文本并提取角色信息',
-  inputs: [
-    {
-      id: 'text',
-      name: '文本',
-      dataType: PortDataType.TEXT,
-      required: false,
-      description: '可选的文本输入'
-    }
-  ],
-  outputs: [
-    {
-      id: 'roles',
-      name: '角色数据',
-      dataType: PortDataType.JSON,
-      description: '提取的角色信息'
-    }
-  ],
-  defaultData: {
-    label: '角色解析',
-    content: '',
-    extractedRoles: null,
-  },
-  contextMenu: [
-    {
-      id: 'extract',
-      label: '提取角色',
-      type: MenuItemType.ACTION,
-      icon: '🔍',
-    },
-    {
-      id: 'divider1',
-      label: '',
-      type: MenuItemType.DIVIDER,
-    },
-    {
-      id: 'delete',
-      label: '删除节点',
-      type: MenuItemType.ACTION,
-      icon: '🗑️',
-    }
-  ]
-};
+
 
 /**
  * 角色视频节点配置
  */
-export const characterVideoNodeConfig: NodeConfig = {
-  type: 'characterVideoNode',
-  label: '角色视频',
-  icon: '🎬',
-  category: NodeCategory.PROCESS,
-  description: '用于选择视频片段并创建角色',
-  inputs: [
-    {
-      id: 'video',
-      name: '视频',
-      dataType: PortDataType.VIDEO,
-      required: false,
-      description: '视频URL或任务ID'
-    }
-  ],
-  outputs: [
-    {
-      id: 'character',
-      name: '角色',
-      dataType: PortDataType.JSON,
-      description: '创建的角色数据'
-    }
-  ],
-  defaultData: {
-    label: '角色视频',
-    videoUrl: undefined,
-    taskId: undefined,
-    startTime: 0,
-    endTime: 3,
-    status: 'idle',
-  },
-  contextMenu: [
-    {
-      id: 'createCharacter',
-      label: '创建角色',
-      type: MenuItemType.ACTION,
-      icon: '🎭',
-    },
-    {
-      id: 'divider1',
-      label: '',
-      type: MenuItemType.DIVIDER,
-    },
-    {
-      id: 'delete',
-      label: '删除节点',
-      type: MenuItemType.ACTION,
-      icon: '🗑️',
-    }
-  ]
-};
+
 
 /**
  * 角色展示节点配置
  */
-export const characterDisplayNodeConfig: NodeConfig = {
-  type: 'characterDisplayNode',
-  label: '角色展示',
-  icon: '👤',
-  category: NodeCategory.OUTPUT,
-  description: '展示创建的角色信息',
-  inputs: [
-    {
-      id: 'character',
-      name: '角色',
-      dataType: PortDataType.JSON,
-      required: true,
-      description: '角色数据'
-    }
-  ],
-  outputs: [
-    {
-      id: 'character',
-      name: '角色',
-      dataType: PortDataType.JSON,
-      description: '传递角色给下游节点'
-    }
-  ],
-  defaultData: {
-    label: '角色展示',
-    characterId: undefined,
-    characterName: undefined,
-    characterImageUrl: undefined,
-    id: undefined,
-  },
-  contextMenu: [
-    {
-      id: 'delete',
-      label: '删除节点',
-      type: MenuItemType.ACTION,
-      icon: '🗑️',
-    }
-  ]
-};
+
 
 /**
  * 分镜场景节点配置
  */
-export const storyboardSceneNodeConfig: NodeConfig = {
-  type: 'storyboardSceneNode',
-  label: '分镜',
-  icon: '🎬',
-  category: NodeCategory.PROCESS,
-  description: '创建和编辑分镜场景',
-  inputs: [
-    {
-      id: 'characters',
-      name: '角色列表',
-      dataType: PortDataType.JSON,
-      required: false,
-      description: '项目角色数据'
-    }
-  ],
-  outputs: [
-    {
-      id: 'scene',
-      name: '分镜场景',
-      dataType: PortDataType.JSON,
-      description: '分镜场景数据'
-    }
-  ],
-  defaultData: {
-    label: '分镜',
-    projectCharacters: [],
-    selectedCharacterIds: [],
-    copywriting: '',
-    storyboard: '',
-  },
-  contextMenu: [
-    {
-      id: 'generate',
-      label: '生成分镜',
-      type: MenuItemType.ACTION,
-      icon: '⚡',
-    },
-    {
-      id: 'divider1',
-      label: '',
-      type: MenuItemType.DIVIDER,
-    },
-    {
-      id: 'delete',
-      label: '删除节点',
-      type: MenuItemType.ACTION,
-      icon: '🗑️',
-    }
-  ]
-};
+
 
 /**
  * 场景描述节点配置
@@ -783,42 +455,7 @@ export const sceneDescriptionNodeConfig: NodeConfig = {
 /**
  * 分镜列表节点配置
  */
-export const storyboardListNodeConfig: NodeConfig = {
-  type: 'storyboardListNode',
-  label: '分镜列表',
-  icon: '📋',
-  category: NodeCategory.OUTPUT,
-  description: '展示分镜列表并可创建分镜节点',
-  inputs: [
-    {
-      id: 'input',
-      name: '输入',
-      dataType: PortDataType.ARRAY,
-      required: false,
-      description: '分镜数据输入'
-    }
-  ],
-  outputs: [
-    {
-      id: 'output',
-      name: '输出',
-      dataType: PortDataType.ARRAY,
-      description: '分镜数据输出'
-    }
-  ],
-  defaultData: {
-    label: '分镜列表',
-    cameraList: null,
-  },
-  contextMenu: [
-    {
-      id: 'delete',
-      label: '删除节点',
-      type: MenuItemType.ACTION,
-      icon: '🗑️',
-    }
-  ]
-};
+
 
 // 注册所有内置节点
 nodeRegistry.registerBatch([
@@ -826,13 +463,4 @@ nodeRegistry.registerBatch([
   imageDisplayNodeConfig,
   videoGenerationNodeConfig,
   videoDisplayNodeConfig,
-  characterGenerationNodeConfig,
-  characterVideoNodeConfig,
-  characterDisplayNodeConfig,
-  storyboardNodeConfig,
-  storyboardSceneNodeConfig,
-  storyboardListNodeConfig,
-  storyDescriptionNodeConfig,
-  sceneDescriptionNodeConfig,
-  roleAnalysisNodeConfig,
 ]);

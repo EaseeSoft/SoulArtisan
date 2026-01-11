@@ -1,15 +1,21 @@
-
 import React, { useState } from 'react';
-import { Trash2, Hammer, PanelRightClose, PanelRight } from 'lucide-react';
-import { CanvasItem, PlanStep, ChatMessage } from './types';
-import Canvas from './components/Canvas';
-import Sidebar from './components/Sidebar';
-import Toolbar from './components/Toolbar';
-import HomePage from './components/HomePage';
-import { generatePlan, generateImage, generateBrainstorm, refineContent, performResearch } from './services/gemini';
+import { Trash2, Hammer, PanelRightClose, PanelRight, User, LogOut, ChevronDown } from 'lucide-react';
+import { CanvasItem, PlanStep, ChatMessage } from '../types';
+import Canvas from '@/components/Canvas';
+import Sidebar from '@/components/Sidebar';
+import Toolbar from '@/components/Toolbar';
+import HomePage from '@/components/HomePage';
+import LoginPage from '@/components/LoginPage';
+import RegisterPage from '@/components/RegisterPage';
+import { AuthProvider } from '@/contexts/AuthContext';
+import AuthContext from '@/contexts/AuthContext';
+import { generatePlan, generateImage, generateBrainstorm, performResearch } from '@/services/gemini';
 
-function App() {
-  const [view, setView] = useState<'home' | 'canvas'>('home');
+type ViewType = 'home' | 'canvas' | 'login' | 'register';
+
+function AppContent() {
+  const auth = React.useContext(AuthContext);
+  const [view, setView] = useState<ViewType>('home');
   const [items, setItems] = useState<CanvasItem[]>([]);
   const [plan, setPlan] = useState<PlanStep[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -18,6 +24,7 @@ function App() {
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [showSidebar, setShowSidebar] = useState(true);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const addWorkflow = () => {
     const newId = Math.random().toString(36).substr(2, 9);
@@ -97,6 +104,22 @@ function App() {
     setSelectedIds([]);
   };
 
+  const handleReorderItem = (id: string, direction: 'up' | 'down' | 'top' | 'bottom') => {
+    setItems(prev => {
+      const index = prev.findIndex(i => i.id === id);
+      if (index === -1) return prev;
+      const newItems = [...prev];
+      const [item] = newItems.splice(index, 1);
+      switch (direction) {
+        case 'top': newItems.push(item); break;
+        case 'bottom': newItems.unshift(item); break;
+        case 'up': newItems.splice(Math.min(index + 1, newItems.length), 0, item); break;
+        case 'down': newItems.splice(Math.max(index - 1, 0), 0, item); break;
+      }
+      return newItems;
+    });
+  };
+
   const executePlan = async (steps: any[]) => {
     const newSteps: PlanStep[] = steps.map(s => ({
       id: Math.random().toString(36).substr(2, 9),
@@ -107,7 +130,7 @@ function App() {
       imagePrompt: s.imagePrompt
     }));
     setPlan(newSteps);
-    
+
     const spacing = 450;
     const itemsPerRow = 3;
     const startX = (-pan.x + 100) / zoom;
@@ -142,13 +165,13 @@ function App() {
           const text = await generateBrainstorm(step.title, step.description);
           addMessage(`**${step.title} 方案：**\n\n${text}`, 'assistant');
         } else if (step.type === 'workflow') {
-           handleUpdateItem(step.id, { status: 'completed' });
+          handleUpdateItem(step.id, { status: 'completed' });
         }
         setPlan(prev => prev.map(p => p.id === step.id ? { ...p, status: 'completed' } : p));
       } catch (e) {
         setPlan(prev => prev.map(p => p.id === step.id ? { ...p, status: 'error' } : p));
         if (imageSteps.some(s => s.id === step.id)) {
-           handleUpdateItem(step.id, { status: 'error' });
+          handleUpdateItem(step.id, { status: 'error' });
         }
       }
     }
@@ -167,8 +190,40 @@ function App() {
     } finally { setIsThinking(false); }
   };
 
+  const handleLogout = () => {
+    auth?.logout();
+    setShowUserMenu(false);
+  };
+
+  if (view === 'login') {
+    return (
+      <LoginPage
+        onBack={() => setView('home')}
+        onSuccess={() => setView('home')}
+        onGoRegister={() => setView('register')}
+      />
+    );
+  }
+
+  if (view === 'register') {
+    return (
+      <RegisterPage
+        onBack={() => setView('home')}
+        onSuccess={() => setView('home')}
+        onGoLogin={() => setView('login')}
+      />
+    );
+  }
+
   if (view === 'home') {
-    return <HomePage onStart={startGeneration} onEnterCanvas={() => setView('canvas')} />;
+    return (
+      <HomePage
+        onStart={startGeneration}
+        onEnterCanvas={() => setView('canvas')}
+        onGoLogin={() => setView('login')}
+        onGoRegister={() => setView('register')}
+      />
+    );
   }
 
   return (
@@ -192,8 +247,8 @@ function App() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <button 
-              onClick={() => setShowSidebar(!showSidebar)} 
+            <button
+              onClick={() => setShowSidebar(!showSidebar)}
               className={`p-2 rounded-xl transition-all ${showSidebar ? 'text-indigo-600 bg-indigo-50' : 'text-gray-400 hover:bg-gray-100'}`}
               title={showSidebar ? "隐藏侧边栏" : "显示侧边栏"}
             >
@@ -202,9 +257,47 @@ function App() {
             <div className="h-4 w-[1px] bg-gray-100 mx-1" />
             <button onClick={() => { if(confirm('确定清空匠心画布吗？')) { setItems([]); setPlan([]); setMessages([]); setSelectedIds([]); } }} className="p-2 text-gray-300 hover:text-red-500 rounded-xl transition-all"><Trash2 size={18} /></button>
             <div className="h-4 w-[1px] bg-gray-100 mx-1" />
-            <button className="px-5 py-2 text-xs font-black bg-black text-white rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition-all uppercase tracking-widest">
-              交付作品
-            </button>
+
+            {auth?.isAuthenticated && auth?.userInfo ? (
+              <div className="relative">
+                <button
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-100 text-gray-900 rounded-xl font-medium text-sm hover:bg-gray-50 transition-all"
+                >
+                  <div className="w-6 h-6 bg-indigo-100 rounded-lg flex items-center justify-center">
+                    <User size={14} className="text-indigo-600" />
+                  </div>
+                  <span className="max-w-[80px] truncate hidden sm:inline">{auth.userInfo.nickname || auth.userInfo.username}</span>
+                  <ChevronDown size={14} className={`text-gray-400 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} />
+                </button>
+
+                {showUserMenu && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
+                    <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
+                      <div className="px-4 py-2 border-b border-gray-100">
+                        <p className="text-sm font-bold text-gray-900 truncate">{auth.userInfo.nickname || auth.userInfo.username}</p>
+                        <p className="text-xs text-gray-400 truncate">{auth.userInfo.email || `积分: ${auth.userInfo.points}`}</p>
+                      </div>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full px-4 py-2.5 text-left text-sm text-red-500 hover:bg-red-50 flex items-center gap-2 transition-colors"
+                      >
+                        <LogOut size={16} />
+                        退出登录
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            ) : (
+              <button
+                onClick={() => setView('login')}
+                className="px-5 py-2 text-xs font-black bg-black text-white rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition-all uppercase tracking-widest"
+              >
+                登录
+              </button>
+            )}
           </div>
         </header>
 
@@ -219,14 +312,15 @@ function App() {
             onItemDelete={(id) => handleDeleteItems([id])}
             onItemDeleteMultiple={handleDeleteItems}
             onItemAdd={(item) => { setItems(prev => [...prev, item]); setSelectedIds([item.id]); }}
+            onItemReorder={handleReorderItem}
             selectedIds={selectedIds}
             setSelectedIds={setSelectedIds}
           />
         </div>
 
-        <Toolbar 
-          zoom={zoom} 
-          onZoomChange={setZoom} 
+        <Toolbar
+          zoom={zoom}
+          onZoomChange={setZoom}
           onResetView={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}
           onAddWorkflow={addWorkflow}
           onAddImage={addImageItem}
@@ -247,6 +341,14 @@ function App() {
         }} />
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

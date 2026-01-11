@@ -7,10 +7,8 @@ import com.jf.soulartisan.admin.service.ConcurrencyLimitService;
 import com.jf.soulartisan.common.dto.CharacterCallbackRequest;
 import com.jf.soulartisan.common.dto.VideoCallbackRequest;
 import com.jf.soulartisan.common.util.Result;
-import com.jf.soulartisan.entity.Character;
 import com.jf.soulartisan.entity.VideoGenerationTask;
 import com.jf.soulartisan.entity.VideoResource;
-import com.jf.soulartisan.mapper.CharacterMapper;
 import com.jf.soulartisan.mapper.VideoGenerationTaskMapper;
 import com.jf.soulartisan.mapper.VideoResourceMapper;
 import com.jf.soulartisan.service.CosService;
@@ -38,9 +36,6 @@ import java.net.URL;
 @RequestMapping("/callback")
 @Tag(name = "回调接口（第三方服务调用）")
 public class CallbackController {
-
-    @Resource
-    private CharacterMapper characterMapper;
 
     @Resource
     private VideoResourceMapper videoResourceMapper;
@@ -162,77 +157,6 @@ public class CallbackController {
             return Result.error("处理回调失败: " + e.getMessage(), 500);
         }
     }
-
-    @PostMapping("/character")
-    @Operation(summary = "角色生成回调接口")
-    @SaIgnore
-    public Result<?> characterCallback(@RequestBody CharacterCallbackRequest request) {
-        log.info("收到角色生成回调: id={}, state={}", request.getId(), request.getState());
-        log.info("回调参数: {}", JSONObject.toJSONString(request));
-
-        try {
-            if (StrUtil.isBlank(request.getId())) {
-                log.error("回调参数错误: 缺少任务ID");
-                return Result.error("缺少任务ID", 400);
-            }
-
-            // 根据generationTaskId查询角色
-            Character character = characterMapper.selectByGenerationTaskId(request.getId());
-            if (character == null) {
-                log.error("角色不存在: generation_task_id={}", request.getId());
-                return Result.error("角色不存在", 404);
-            }
-
-            // 更新角色状态
-            if ("succeeded".equals(request.getState())) {
-                character.setStatus(Character.Status.COMPLETED);
-
-                // 保存完整的回调数据
-                character.setResultData(request.getData());
-
-                // 从回调数据中提取生成的角色ID并保存
-                if (request.getData() != null && request.getData().getCharacters() != null
-                    && !request.getData().getCharacters().isEmpty()) {
-                    String characterId = request.getData().getCharacters().get(0).getId();
-                    character.setCharacterId(characterId);
-                    log.info("保存角色ID: generation_task_id={}, character_id={}",
-                            request.getId(), characterId);
-                }
-
-                character.setCompletedAt(java.time.LocalDateTime.now());
-                log.info("角色生成完成: id={}, generation_task_id={}", character.getId(), request.getId());
-
-            } else if ("failed".equals(request.getState())) {
-                character.setStatus(Character.Status.FAILED);
-                character.setErrorMessage(StrUtil.isNotBlank(request.getMessage())
-                    ? request.getMessage()
-                    : "角色生成失败");
-                log.error("角色生成失败: id={}, generation_task_id={}, error={}",
-                        character.getId(), request.getId(), request.getMessage());
-
-            } else if ("processing".equals(request.getState())) {
-                character.setStatus(Character.Status.PROCESSING);
-                log.info("角色正在处理: id={}, generation_task_id={}", character.getId(), request.getId());
-
-            } else {
-                log.warn("未知的状态: state={}", request.getState());
-            }
-
-            // 保存更新
-            int result = characterMapper.updateById(character);
-            if (result <= 0) {
-                log.error("更新角色状态失败: id={}", character.getId());
-                return Result.error("更新状态失败", 500);
-            }
-
-            return Result.success(null, "回调处理成功");
-
-        } catch (Exception e) {
-            log.error("处理角色生成回调失败: {}", e.getMessage(), e);
-            return Result.error("处理回调失败: " + e.getMessage(), 500);
-        }
-    }
-
     /**
      * 异步处理视频：下载并上传到COS
      *
@@ -493,83 +417,6 @@ public class CallbackController {
             }
         } catch (Exception e) {
             log.error("更新 VideoResource 错误状态失败: videoTaskId={}, error={}", videoTaskId, e.getMessage(), e);
-        }
-    }
-
-    /**
-     * 视频资源角色生成回调接口
-     * 处理 VideoResource 的角色生成回调
-     */
-    @PostMapping("/video-resource/character")
-    @Operation(summary = "视频资源角色生成回调接口")
-    @SaIgnore
-    public Result<?> videoResourceCharacterCallback(@RequestBody CharacterCallbackRequest request) {
-        log.info("收到视频资源角色生成回调: id={}, state={}", request.getId(), request.getState());
-        log.info("回调参数: {}", JSONObject.toJSONString(request));
-
-        try {
-            if (StrUtil.isBlank(request.getId())) {
-                log.error("回调参数错误: 缺少任务ID");
-                return Result.error("缺少任务ID", 400);
-            }
-
-            // 根据 generationTaskId 查询 VideoResource
-            VideoResource resource = videoResourceMapper.selectByGenerationTaskId(request.getId());
-            if (resource == null) {
-                log.warn("VideoResource 不存在，尝试查询旧版 Character: generation_task_id={}", request.getId());
-                // 兼容旧版：如果 VideoResource 不存在，尝试查询 Character
-                return characterCallback(request);
-            }
-
-            // 更新资源状态
-            if ("succeeded".equals(request.getState())) {
-                resource.setStatus(VideoResource.Status.COMPLETED);
-
-                // 保存完整的回调数据
-                resource.setResultData(request.getData());
-
-                // 从回调数据中提取生成的角色ID
-                if (request.getData() != null && request.getData().getCharacters() != null
-                        && !request.getData().getCharacters().isEmpty()) {
-                    String characterId = request.getData().getCharacters().get(0).getId();
-                    resource.setCharacterId(characterId);
-                    log.info("保存角色ID: generation_task_id={}, character_id={}",
-                            request.getId(), characterId);
-                }
-
-                resource.setCompletedAt(java.time.LocalDateTime.now());
-                log.info("视频资源角色生成完成: id={}, generation_task_id={}",
-                        resource.getId(), request.getId());
-
-            } else if ("failed".equals(request.getState())) {
-                resource.setStatus(VideoResource.Status.FAILED);
-                resource.setErrorMessage(StrUtil.isNotBlank(request.getMessage())
-                        ? request.getMessage()
-                        : "角色生成失败");
-                log.error("视频资源角色生成失败: id={}, generation_task_id={}, error={}",
-                        resource.getId(), request.getId(), request.getMessage());
-
-            } else if ("processing".equals(request.getState())) {
-                resource.setStatus(VideoResource.Status.CHARACTER_GENERATING);
-                log.info("视频资源角色正在处理: id={}, generation_task_id={}",
-                        resource.getId(), request.getId());
-
-            } else {
-                log.warn("未知的状态: state={}", request.getState());
-            }
-
-            // 保存更新
-            int result = videoResourceMapper.updateById(resource);
-            if (result <= 0) {
-                log.error("更新视频资源状态失败: id={}", resource.getId());
-                return Result.error("更新状态失败", 500);
-            }
-
-            return Result.success(null, "回调处理成功");
-
-        } catch (Exception e) {
-            log.error("处理视频资源角色生成回调失败: {}", e.getMessage(), e);
-            return Result.error("处理回调失败: " + e.getMessage(), 500);
         }
     }
 }

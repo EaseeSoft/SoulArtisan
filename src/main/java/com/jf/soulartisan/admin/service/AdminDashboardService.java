@@ -7,7 +7,6 @@ import com.jf.soulartisan.admin.dto.response.DashboardTrendResponse;
 import com.jf.soulartisan.entity.ImageGenerationTask;
 import com.jf.soulartisan.entity.User;
 import com.jf.soulartisan.entity.VideoGenerationTask;
-import com.jf.soulartisan.entity.WorkflowProject;
 import com.jf.soulartisan.mapper.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +33,6 @@ public class AdminDashboardService {
     private ImageGenerationTaskMapper imageTaskMapper;
     @Autowired
     private VideoGenerationTaskMapper videoTaskMapper;
-    @Autowired
-    private WorkflowProjectMapper projectMapper;
-    @Autowired
-    private CharacterMapper characterMapper;
 
     /**
      * 获取系统统计数据（自动按站点过滤）
@@ -152,34 +147,6 @@ public class AdminDashboardService {
         long succeededVideoTasks = videoTaskMapper.selectCount(videoWrapper);
         stats.setVideoTaskCompletionRate(totalVideoTasks > 0 ? (succeededVideoTasks * 100.0 / totalVideoTasks) : 0.0);
 
-        // 项目统计
-        LambdaQueryWrapper<WorkflowProject> projectWrapper = new LambdaQueryWrapper<>();
-        if (currentSiteId != null) {
-            projectWrapper.eq(WorkflowProject::getSiteId, currentSiteId);
-        }
-        stats.setTotalProjects(projectMapper.selectCount(projectWrapper));
-
-        projectWrapper.clear();
-        if (currentSiteId != null) {
-            projectWrapper.eq(WorkflowProject::getSiteId, currentSiteId);
-        }
-        projectWrapper.between(WorkflowProject::getCreatedAt, todayStart, todayEnd);
-        stats.setTodayNewProjects(projectMapper.selectCount(projectWrapper));
-
-        // 角色统计
-        LambdaQueryWrapper<com.jf.soulartisan.entity.Character> characterWrapper = new LambdaQueryWrapper<>();
-        if (currentSiteId != null) {
-            characterWrapper.eq(com.jf.soulartisan.entity.Character::getSiteId, currentSiteId);
-        }
-        stats.setTotalCharacters(characterMapper.selectCount(characterWrapper));
-
-        characterWrapper.clear();
-        if (currentSiteId != null) {
-            characterWrapper.eq(com.jf.soulartisan.entity.Character::getSiteId, currentSiteId);
-        }
-        characterWrapper.between(com.jf.soulartisan.entity.Character::getCreatedAt, todayStart, todayEnd);
-        stats.setTodayNewCharacters(characterMapper.selectCount(characterWrapper));
-
         return stats;
     }
 
@@ -236,14 +203,6 @@ public class AdminDashboardService {
             }
             videoWrapper.between(VideoGenerationTask::getCreatedAt, dayStart, dayEnd);
             videoTasks.add(videoTaskMapper.selectCount(videoWrapper));
-
-            // 统计当天新增项目数
-            LambdaQueryWrapper<WorkflowProject> projectWrapper = new LambdaQueryWrapper<>();
-            if (currentSiteId != null) {
-                projectWrapper.eq(WorkflowProject::getSiteId, currentSiteId);
-            }
-            projectWrapper.between(WorkflowProject::getCreatedAt, dayStart, dayEnd);
-            projects.add(projectMapper.selectCount(projectWrapper));
         }
 
         trend.setDates(dates);

@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Stage, Layer, Image as KonvaImage, Rect, Transformer, Line, Group } from 'react-konva';
+import { Stage, Layer, Image as KonvaImage, Rect, Transformer, Line, Group, Text } from 'react-konva';
 import { CanvasItem } from '../types';
 import { removeBackground } from '@imgly/background-removal';
 import {
   Loader2, PenTool, Type, ChevronDown, Download,
   MessageSquarePlus, Scissors, Maximize2, Video,
-  Eraser, Sliders, Edit3, Square, Scan, Undo, Redo, X
+  Eraser, Sliders, Edit3, Square, Scan, Undo, Redo, X,
+  ArrowUp, ArrowDown, ChevronsUp, ChevronsDown
 } from 'lucide-react';
 
 interface CanvasProps {
@@ -18,6 +19,7 @@ interface CanvasProps {
   onItemDelete: (id: string) => void;
   onItemDeleteMultiple: (ids: string[]) => void;
   onItemAdd: (item: CanvasItem) => void;
+  onItemReorder: (id: string, direction: 'up' | 'down' | 'top' | 'bottom') => void;
   selectedIds: string[];
   setSelectedIds: (ids: string[]) => void;
 }
@@ -93,8 +95,52 @@ const ImageNode: React.FC<{
   );
 };
 
+// 文本节点组件
+const TextNode: React.FC<{
+  item: CanvasItem;
+  isSelected: boolean;
+  onSelect: (e: any) => void;
+  onChange: (attrs: Partial<CanvasItem>) => void;
+  onDoubleClick: () => void;
+}> = ({ item, isSelected, onSelect, onChange, onDoubleClick }) => {
+  const textRef = useRef<any>(null);
+
+  return (
+    <Text
+      ref={textRef}
+      id={item.id}
+      text={item.content || '双击编辑文本'}
+      x={item.x}
+      y={item.y}
+      width={item.width}
+      fontSize={16}
+      fontFamily="sans-serif"
+      fill="#333"
+      draggable
+      onClick={onSelect}
+      onTap={onSelect}
+      onDblClick={onDoubleClick}
+      onDblTap={onDoubleClick}
+      onDragEnd={(e) => {
+        onChange({ x: e.target.x(), y: e.target.y() });
+      }}
+      onTransformEnd={(e) => {
+        const node = e.target;
+        const scaleX = node.scaleX();
+        node.scaleX(1);
+        node.scaleY(1);
+        onChange({
+          x: node.x(),
+          y: node.y(),
+          width: Math.max(50, node.width() * scaleX),
+        });
+      }}
+    />
+  );
+};
+
 const Canvas: React.FC<CanvasProps> = ({
-  items, zoom, onZoomChange, pan, onPanChange, onItemUpdate, onItemDelete, onItemDeleteMultiple, onItemAdd, selectedIds, setSelectedIds
+  items, zoom, onZoomChange, pan, onPanChange, onItemUpdate, onItemDelete, onItemDeleteMultiple, onItemAdd, onItemReorder, selectedIds, setSelectedIds
 }) => {
   const stageRef = useRef<any>(null);
   const transformerRef = useRef<any>(null);
@@ -124,6 +170,14 @@ const Canvas: React.FC<CanvasProps> = ({
   // 抠图状态
   const [isSegmenting, setIsSegmenting] = useState(false);
   const [maskImage, setMaskImage] = useState<HTMLImageElement | null>(null);
+
+  // 右键菜单状态
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; itemId: string } | null>(null);
+
+  // 文本编辑状态
+  const [editingTextId, setEditingTextId] = useState<string | null>(null);
+  const [editingTextValue, setEditingTextValue] = useState('');
+  const textInputRef = useRef<HTMLTextAreaElement>(null);
 
   // 获取选中的单个图片项
   const selectedItem = selectedIds.length === 1 ? items.find(i => i.id === selectedIds[0]) : null;
@@ -163,11 +217,20 @@ const Canvas: React.FC<CanvasProps> = ({
       if (e.key === 'Escape') {
         setEditMode('none');
         setLines([]);
+        setContextMenu(null);
+        setEditingTextId(null);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedIds, onItemDeleteMultiple]);
+
+  // 点击其他地方关闭右键菜单
+  useEffect(() => {
+    const handleClick = () => setContextMenu(null);
+    window.addEventListener('click', handleClick);
+    return () => window.removeEventListener('click', handleClick);
+  }, []);
 
   // 滚轮缩放
   const handleWheel = useCallback((e: any) => {
@@ -216,19 +279,37 @@ const Canvas: React.FC<CanvasProps> = ({
     const stage = stageRef.current;
     if (!stage) return;
 
-    // 编辑模式下绘制蒙版
+    // 右键点击 - 显示上下文菜单
+    if (e.evt.button === 2) {
+      e.evt.preventDefault();
+      const clickedNode = e.target;
+      if (clickedNode !== stage) {
+        const itemId = clickedNode.id();
+        if (itemId) {
+          setContextMenu({ x: e.evt.clientX, y: e.evt.clientY, itemId });
+          if (!selectedIds.includes(itemId)) {
+            setSelectedIds([itemId]);
+          }
+        }
+      }
+      return;
+    }
+
+    // 编辑模式下
     if (editMode !== 'none' && selectedItem) {
       const pos = getRelativePointerPosition(stage);
+      // 点击在图片区域内 - 开始绘制
       if (pos && pos.x >= 0 && pos.x <= selectedItem.width && pos.y >= 0 && pos.y <= selectedItem.height) {
         setIsDrawing(true);
         setLines([...lines, { points: [pos.x, pos.y], tool: editTool, strokeWidth: brushSize }]);
-        return;
       }
+      // 编辑模式下不执行其他操作
+      return;
     }
 
     // 点击空白区域开始框选
     const clickedOnEmpty = e.target === stage;
-    if (clickedOnEmpty) {
+    if (clickedOnEmpty && e.evt.button === 0) {
       setSelectedIds([]);
       const pointer = stage.getPointerPosition();
       const pos = {
@@ -246,12 +327,9 @@ const Canvas: React.FC<CanvasProps> = ({
     const stage = stageRef.current;
     if (!stage) return;
 
-    // 更新自定义光标位置
+    // 更新自定义光标位置 - 使用视口坐标
     if (editMode !== 'none' && selectedItem) {
-      const pointer = stage.getPointerPosition();
-      if (pointer) {
-        setCursorPos({ x: pointer.x, y: pointer.y });
-      }
+      setCursorPos({ x: e.evt.clientX, y: e.evt.clientY });
     }
 
     // 绘制蒙版
@@ -339,6 +417,22 @@ const Canvas: React.FC<CanvasProps> = ({
     setMaskImage(null);
   };
 
+  // 开始编辑文本
+  const startEditingText = (item: CanvasItem) => {
+    setEditingTextId(item.id);
+    setEditingTextValue(item.content || '');
+    setTimeout(() => textInputRef.current?.focus(), 0);
+  };
+
+  // 完成文本编辑
+  const finishEditingText = () => {
+    if (editingTextId) {
+      onItemUpdate(editingTextId, { content: editingTextValue });
+      setEditingTextId(null);
+      setEditingTextValue('');
+    }
+  };
+
   // 抠图 - 使用 imgly 进行精准主体分割
   const handleSegmentation = async () => {
     if (!selectedItem || !selectedItem.content) return;
@@ -419,6 +513,7 @@ const Canvas: React.FC<CanvasProps> = ({
       className="w-full h-full overflow-hidden canvas-grid bg-[#f5f5f5]"
       style={{ cursor: editMode !== 'none' ? 'none' : 'default' }}
       onMouseLeave={() => setCursorPos(null)}
+      onContextMenu={(e) => e.preventDefault()}
     >
       <Stage
         ref={stageRef}
@@ -428,20 +523,16 @@ const Canvas: React.FC<CanvasProps> = ({
         scaleY={zoom}
         x={pan.x}
         y={pan.y}
-        draggable={editMode === 'none'}
+        draggable={false}
         onWheel={handleWheel}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onDragEnd={(e) => {
-          if (e.target === stageRef.current) {
-            onPanChange({ x: e.target.x(), y: e.target.y() });
-          }
-        }}
+        onContextMenu={(e) => e.evt.preventDefault()}
       >
         {/* 图片层 */}
         <Layer>
-          {items.map((item) => (
+          {items.filter(item => item.type === 'image').map((item) => (
             <ImageNode
               key={item.id}
               item={item}
@@ -449,6 +540,16 @@ const Canvas: React.FC<CanvasProps> = ({
               isEditing={editMode !== 'none' && selectedIds.includes(item.id)}
               onSelect={(e) => handleSelect(e, item.id)}
               onChange={(attrs) => onItemUpdate(item.id, attrs)}
+            />
+          ))}
+          {items.filter(item => item.type === 'text').map((item) => (
+            <TextNode
+              key={item.id}
+              item={item}
+              isSelected={selectedIds.includes(item.id)}
+              onSelect={(e) => handleSelect(e, item.id)}
+              onChange={(attrs) => onItemUpdate(item.id, attrs)}
+              onDoubleClick={() => startEditingText(item)}
             />
           ))}
         </Layer>
@@ -550,14 +651,6 @@ const Canvas: React.FC<CanvasProps> = ({
           >
             <Eraser size={16} />
             <span>消除笔</span>
-          </button>
-          <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-            <Sliders size={16} />
-            <span>画面微调</span>
-          </button>
-          <button className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
-            <Type size={16} />
-            <span>文字重绘</span>
           </button>
         </div>
       )}
@@ -695,6 +788,63 @@ const Canvas: React.FC<CanvasProps> = ({
           }}
         />
       )}
+
+      {/* 右键上下文菜单 */}
+      {contextMenu && (
+        <div
+          className="fixed z-[9999] bg-white rounded-lg shadow-lg border border-gray-200 py-1 min-w-[140px]"
+          style={{ left: contextMenu.x, top: contextMenu.y }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            onClick={() => { onItemReorder(contextMenu.itemId, 'top'); setContextMenu(null); }}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
+            <ChevronsUp size={16} /> 置于顶层
+          </button>
+          <button
+            onClick={() => { onItemReorder(contextMenu.itemId, 'up'); setContextMenu(null); }}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
+            <ArrowUp size={16} /> 上移一层
+          </button>
+          <button
+            onClick={() => { onItemReorder(contextMenu.itemId, 'down'); setContextMenu(null); }}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
+            <ArrowDown size={16} /> 下移一层
+          </button>
+          <button
+            onClick={() => { onItemReorder(contextMenu.itemId, 'bottom'); setContextMenu(null); }}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
+            <ChevronsDown size={16} /> 置于底层
+          </button>
+        </div>
+      )}
+
+      {/* 文本编辑输入框 */}
+      {editingTextId && (() => {
+        const editingItem = items.find(i => i.id === editingTextId);
+        if (!editingItem) return null;
+        return (
+          <textarea
+            ref={textInputRef}
+            value={editingTextValue}
+            onChange={(e) => setEditingTextValue(e.target.value)}
+            onBlur={finishEditingText}
+            onKeyDown={(e) => { if (e.key === 'Escape') { setEditingTextId(null); } }}
+            className="fixed z-[9999] bg-transparent border-2 border-indigo-500 rounded outline-none resize-none p-1 text-base"
+            style={{
+              left: editingItem.x * zoom + pan.x,
+              top: editingItem.y * zoom + pan.y,
+              width: editingItem.width * zoom,
+              minHeight: 40,
+              fontFamily: 'sans-serif',
+            }}
+          />
+        );
+      })()}
     </div>
   );
 };

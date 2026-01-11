@@ -9,7 +9,6 @@ import com.jf.soulartisan.admin.mapper.SiteMapper;
 import com.jf.soulartisan.entity.ImageGenerationTask;
 import com.jf.soulartisan.entity.User;
 import com.jf.soulartisan.entity.VideoGenerationTask;
-import com.jf.soulartisan.entity.WorkflowProject;
 import com.jf.soulartisan.mapper.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +43,6 @@ public class AdminStatsService {
 
     @Autowired
     private VideoGenerationTaskMapper videoTaskMapper;
-
-    @Autowired
-    private WorkflowProjectMapper projectMapper;
-
-    @Autowired
-    private CharacterMapper characterMapper;
 
     /**
      * 获取用户统计数据
@@ -123,17 +116,9 @@ public class AdminStatsService {
                 false // isVideoTask
         );
 
-        // 项目统计
-        ContentStatisticsResponse.ProjectStatistics projectStats = getProjectStatistics(currentSiteId);
-
-        // 角色统计
-        ContentStatisticsResponse.CharacterStatistics characterStats = getCharacterStatistics(currentSiteId);
-
         return ContentStatisticsResponse.builder()
                 .imageTaskStats(imageTaskStats)
                 .videoTaskStats(videoTaskStats)
-                .projectStats(projectStats)
-                .characterStats(characterStats)
                 .build();
     }
 
@@ -453,71 +438,5 @@ public class AdminStatsService {
                 .sorted((a, b) -> b.getCount().compareTo(a.getCount()))
                 .limit(10)
                 .collect(Collectors.toList());
-    }
-
-    private ContentStatisticsResponse.ProjectStatistics getProjectStatistics(Long siteId) {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
-        LocalDateTime weekStart = now.minusDays(7);
-        LocalDateTime monthStart = now.minusDays(30);
-
-        LambdaQueryWrapper<WorkflowProject> wrapper = new LambdaQueryWrapper<>();
-        if (siteId != null) {
-            wrapper.eq(WorkflowProject::getSiteId, siteId);
-        }
-        Integer totalProjects = Math.toIntExact(projectMapper.selectCount(wrapper));
-
-        Integer todayNewProjects = countProjectsByDateRange(siteId, todayStart, now);
-        Integer weekNewProjects = countProjectsByDateRange(siteId, weekStart, now);
-        Integer monthNewProjects = countProjectsByDateRange(siteId, monthStart, now);
-
-        return ContentStatisticsResponse.ProjectStatistics.builder()
-                .totalProjects(totalProjects)
-                .todayNewProjects(todayNewProjects)
-                .weekNewProjects(weekNewProjects)
-                .monthNewProjects(monthNewProjects)
-                .build();
-    }
-
-    private ContentStatisticsResponse.CharacterStatistics getCharacterStatistics(Long siteId) {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
-        LocalDateTime weekStart = now.minusDays(7);
-        LocalDateTime monthStart = now.minusDays(30);
-
-        LambdaQueryWrapper<com.jf.soulartisan.entity.Character> wrapper = new LambdaQueryWrapper<>();
-        if (siteId != null) {
-            wrapper.eq(com.jf.soulartisan.entity.Character::getSiteId, siteId);
-        }
-        Integer totalCharacters = Math.toIntExact(characterMapper.selectCount(wrapper));
-
-        Integer todayNewCharacters = countCharactersByDateRange(siteId, todayStart, now);
-        Integer weekNewCharacters = countCharactersByDateRange(siteId, weekStart, now);
-        Integer monthNewCharacters = countCharactersByDateRange(siteId, monthStart, now);
-
-        return ContentStatisticsResponse.CharacterStatistics.builder()
-                .totalCharacters(totalCharacters)
-                .todayNewCharacters(todayNewCharacters)
-                .weekNewCharacters(weekNewCharacters)
-                .monthNewCharacters(monthNewCharacters)
-                .build();
-    }
-
-    private Integer countProjectsByDateRange(Long siteId, LocalDateTime start, LocalDateTime end) {
-        LambdaQueryWrapper<WorkflowProject> wrapper = new LambdaQueryWrapper<>();
-        if (siteId != null) {
-            wrapper.eq(WorkflowProject::getSiteId, siteId);
-        }
-        wrapper.between(WorkflowProject::getCreatedAt, start, end);
-        return Math.toIntExact(projectMapper.selectCount(wrapper));
-    }
-
-    private Integer countCharactersByDateRange(Long siteId, LocalDateTime start, LocalDateTime end) {
-        LambdaQueryWrapper<com.jf.soulartisan.entity.Character> wrapper = new LambdaQueryWrapper<>();
-        if (siteId != null) {
-            wrapper.eq(com.jf.soulartisan.entity.Character::getSiteId, siteId);
-        }
-        wrapper.between(com.jf.soulartisan.entity.Character::getCreatedAt, start, end);
-        return Math.toIntExact(characterMapper.selectCount(wrapper));
     }
 }

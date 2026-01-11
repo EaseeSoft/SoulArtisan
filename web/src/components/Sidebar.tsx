@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { PlanStep, ChatMessage } from '../types';
+import { PlanStep, ChatMessage } from '../../types.ts';
 import { Loader2, CheckCircle2, Circle, AlertCircle, Hammer, Send } from 'lucide-react';
 
 interface SidebarProps {
